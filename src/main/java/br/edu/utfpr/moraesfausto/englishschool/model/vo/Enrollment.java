@@ -20,7 +20,7 @@ public class Enrollment {
     
     private LocalDate signingDate;
     private LocalDate expiringDate;
-    private float value;
+    private float en_value;
 
     public LocalDate getSigningDate() {
         return signingDate;
@@ -39,11 +39,11 @@ public class Enrollment {
     }
 
     public float getValue() {
-        return value;
+        return en_value;
     }
 
     public void setValue(float value) {
-        this.value = value;
+        this.en_value = value;
     }
     
 }

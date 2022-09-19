@@ -6,14 +6,25 @@
 package br.edu.utfpr.moraesfausto.englishschool.model.vo;
 
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author f4ustx
  */
+@Entity
+@Table(name="team")
 public class Team {
+    
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
     @OneToMany(mappedBy="team")
     private List<Teacher> teachers;
     
@@ -23,6 +34,14 @@ public class Team {
     @ManyToOne
     private Meeting meeting;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
     public List<Teacher> getTeachers() {
         return teachers;
     }

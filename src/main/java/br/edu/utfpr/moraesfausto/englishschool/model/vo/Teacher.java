@@ -5,6 +5,7 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.model.vo;
 
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -23,8 +24,11 @@ public class Teacher extends Worker {
     @ManyToOne
     private Meeting meeting;
     
+    @ManyToOne
+    private Team team;
+    
     @OneToMany(mappedBy="teacher")
-    private SchoolClass schoolClass;
+    private List<SchoolClass> schoolClass;
 
     public String getPassword() {
         return password;
@@ -34,6 +38,14 @@ public class Teacher extends Worker {
         this.password = password;
     }
 
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+        
     public Meeting getMeeting() {
         return meeting;
     }
@@ -42,11 +54,11 @@ public class Teacher extends Worker {
         this.meeting = meeting;
     }
 
-    public SchoolClass getSchoolClass() {
+    public List<SchoolClass> getSchoolClass() {
         return schoolClass;
     }
 
-    public void setSchoolClass(SchoolClass schoolClass) {
+    public void setSchoolClass(List<SchoolClass> schoolClass) {
         this.schoolClass = schoolClass;
     }
     

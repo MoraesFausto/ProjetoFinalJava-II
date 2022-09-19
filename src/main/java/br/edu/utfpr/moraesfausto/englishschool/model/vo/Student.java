@@ -8,6 +8,7 @@ package br.edu.utfpr.moraesfausto.englishschool.model.vo;
 import java.util.List;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,6 +22,7 @@ public class Student extends Person {
     
     private float schoolarship;
         
+    @ManyToOne
     private SchoolClass schoolClass;
     
     @OneToMany(mappedBy="student")

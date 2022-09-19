@@ -5,6 +5,7 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.model.vo;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -21,7 +22,7 @@ public class Worker extends Person {
     
     private String licenseNumber;
     
-    @ManyToOne
+    @Embedded
     private Contract contract;
 
     public boolean isActive() {
