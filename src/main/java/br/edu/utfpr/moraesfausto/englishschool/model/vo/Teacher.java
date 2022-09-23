@@ -20,10 +20,7 @@ import javax.persistence.Table;
 public class Teacher extends Worker {
     
     private String password;
-    
-    @ManyToOne
-    private Meeting meeting;
-    
+       
     @ManyToOne
     private Team team;
     
@@ -44,14 +41,6 @@ public class Teacher extends Worker {
 
     public void setTeam(Team team) {
         this.team = team;
-    }
-        
-    public Meeting getMeeting() {
-        return meeting;
-    }
-
-    public void setMeeting(Meeting meeting) {
-        this.meeting = meeting;
     }
 
     public List<SchoolClass> getSchoolClass() {

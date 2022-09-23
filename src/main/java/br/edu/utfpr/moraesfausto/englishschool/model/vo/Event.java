@@ -31,10 +31,66 @@ public class Event {
     
     private float budget;
     private float profit;
-
-    @ManyToOne
-    private Level level;
+    
     
     @ManyToOne
     private Coordinator coordinator;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public LocalDate getFirstDay() {
+        return firstDay;
+    }
+
+    public void setFirstDay(LocalDate firstDay) {
+        this.firstDay = firstDay;
+    }
+
+    public LocalDate getLastDay() {
+        return lastDay;
+    }
+
+    public void setLastDay(LocalDate lastDay) {
+        this.lastDay = lastDay;
+    }
+
+    public float getBudget() {
+        return budget;
+    }
+
+    public void setBudget(float budget) {
+        this.budget = budget;
+    }
+
+    public float getProfit() {
+        return profit;
+    }
+
+    public void setProfit(float profit) {
+        this.profit = profit;
+    }
+
+    public Coordinator getCoordinator() {
+        return coordinator;
+    }
+
+    public void setCoordinator(Coordinator coordinator) {
+        this.coordinator = coordinator;
+    }
+    
+    
 }
