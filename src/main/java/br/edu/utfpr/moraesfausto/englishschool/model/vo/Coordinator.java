@@ -19,12 +19,12 @@ import javax.persistence.Table;
 public class Coordinator extends Worker {
 
     private String password;
-
-    @OneToMany(mappedBy="coordinator")
-    private List<Meeting> meetings;
     
     @OneToMany(mappedBy="coordinator")
     private List<Event> events;
+    
+    @OneToMany(mappedBy="coordinator")
+    private List<Team> teams;
 
     public String getPassword() {
         return password;
@@ -34,14 +34,14 @@ public class Coordinator extends Worker {
         this.password = password;
     }
 
-    public List<Meeting> getMeetings() {
-        return meetings;
+    public List<Team> getTeams() {
+        return teams;
     }
 
-    public void setMeetings(List<Meeting> meetings) {
-        this.meetings = meetings;
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
-
+    
     public List<Event> getEvents() {
         return events;
     }

@@ -35,10 +35,7 @@ public class Meeting {
     private ScheduleDays scheduleDay;
     
     private ScheduleMeetingTimes meetingTime;
-    
-    @ManyToOne
-    private Coordinator coordinator;
-    
+       
     @OneToMany(mappedBy="meeting")
     private List<Team> teams;
     
