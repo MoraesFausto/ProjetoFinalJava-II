@@ -10,7 +10,6 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Meeting_ {
 
 	public static volatile SingularAttribute<Meeting, ScheduleMeetingTimes> meetingTime;
-	public static volatile SingularAttribute<Meeting, Coordinator> coordinator;
 	public static volatile ListAttribute<Meeting, Team> teams;
 	public static volatile SingularAttribute<Meeting, ScheduleDays> scheduleDay;
 	public static volatile SingularAttribute<Meeting, String> topic;

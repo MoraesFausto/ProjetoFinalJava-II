@@ -11,7 +11,6 @@ public abstract class Event_ {
 
 	public static volatile SingularAttribute<Event, Coordinator> coordinator;
 	public static volatile SingularAttribute<Event, LocalDate> firstDay;
-	public static volatile SingularAttribute<Event, Level> level;
 	public static volatile SingularAttribute<Event, LocalDate> lastDay;
 	public static volatile SingularAttribute<Event, Long> id;
 	public static volatile SingularAttribute<Event, String> title;

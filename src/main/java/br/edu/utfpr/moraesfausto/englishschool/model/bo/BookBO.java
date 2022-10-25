@@ -22,29 +22,19 @@ public class BookBO {
         this.bookDAO = new BookDAOImpl();
     }
     
-    public void save(Book book){
-        try{
-          bookDAO.save(book);
-        } catch(HibernateException he){
-            System.out.println(he);
-        }
-    }
-    public void update(Book book){
-        bookDAO.update(book);
-    }
-    public void delete(Book book){
-        bookDAO.delete(book);
-    }
-    
     public List<Book> listAll(){
         return bookDAO.listAll();
     }
     
     public Book listById(Long id){
+        if(id == null)
+            throw new IllegalArgumentException("Id cannot be null");
         return bookDAO.listById(id);
     }
     
     public Book listByTitle(String title){
+        if(title.length() <= 0)
+            throw new IllegalArgumentException("Title cannot be empty");
         return bookDAO.listByTitle(title);
     }
     

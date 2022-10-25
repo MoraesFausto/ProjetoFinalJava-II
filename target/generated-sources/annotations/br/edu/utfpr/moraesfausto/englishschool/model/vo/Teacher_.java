@@ -12,7 +12,6 @@ public abstract class Teacher_ extends br.edu.utfpr.moraesfausto.englishschool.m
 	public static volatile ListAttribute<Teacher, SchoolClass> schoolClass;
 	public static volatile SingularAttribute<Teacher, String> password;
 	public static volatile SingularAttribute<Teacher, Team> team;
-	public static volatile SingularAttribute<Teacher, Meeting> meeting;
 
 }
 

@@ -14,12 +14,6 @@ import java.util.List;
  */
 public interface BookDAO {
     
-    void save(Book book);
-    
-    void update(Book book);
-    
-    void delete(Book book);
-    
     List<Book> listAll();
     
     Book listById(Long id);

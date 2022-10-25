@@ -10,7 +10,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Coordinator_ extends br.edu.utfpr.moraesfausto.englishschool.model.vo.Worker_ {
 
 	public static volatile SingularAttribute<Coordinator, String> password;
-	public static volatile ListAttribute<Coordinator, Meeting> meetings;
+	public static volatile ListAttribute<Coordinator, Team> teams;
 	public static volatile ListAttribute<Coordinator, Event> events;
 
 }

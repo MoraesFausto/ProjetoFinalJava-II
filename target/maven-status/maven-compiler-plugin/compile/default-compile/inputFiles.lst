@@ -4,8 +4,10 @@
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/vo/SchoolClass.java
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/dao/SubjectDAO.java
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/vo/Team.java
+/home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/bo/GenericBO.java
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/vo/Payment.java
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/vo/Enrollment.java
+/home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/bo/GenericBOImpl.java
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/vo/ScheduleTimes.java
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/view/swing/Main.java
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/dao/StudentDAOImpl.java
@@ -17,6 +19,7 @@
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/vo/Event.java
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/vo/Grade.java
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/dao/CoordinatorDAOImpl.java
+/home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/dao/generic/GenericDAO.java
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/vo/Student.java
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/dao/TeacherDAO.java
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/dao/TeamDAO.java
@@ -27,6 +30,7 @@
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/bo/MeetingBO.java
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/dao/PaymentDAO.java
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/dao/CoordinatorDAO.java
+/home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/dao/generic/GenericDAOImpl.java
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/dao/LevelDAO.java
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/bo/StudentBO.java
 /home/f4ustx/NetBeansProjects/englishSchool/src/main/java/br/edu/utfpr/moraesfausto/englishschool/model/bo/TeamBO.java

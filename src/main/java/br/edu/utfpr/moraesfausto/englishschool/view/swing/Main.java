@@ -7,6 +7,7 @@ package br.edu.utfpr.moraesfausto.englishschool.view.swing;
 
 import javax.persistence.EntityManager;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import br.edu.utfpr.moraesfausto.englishschool.model.dao.HibernateConnection;
 import br.edu.utfpr.moraesfausto.englishschool.model.bo.LevelBO;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Level;
@@ -19,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -34,6 +36,8 @@ public class Main extends javax.swing.JInternalFrame {
     static JPanel panel = new JPanel();
     static List<JTextField> listOfFields = new ArrayList<JTextField>();;
     static Field [] fields;
+    private GenericBOImpl genericType;
+    static Method [] methods;
     /**
      * Creates new form Main
      */
@@ -42,16 +46,17 @@ public class Main extends javax.swing.JInternalFrame {
     }
     
     public static void main(String[] args){
-        
-        GenericBOImpl<Level> Generic = new GenericBOImpl<Level>();
         Level level = new Level();
+
+        GenericBOImpl<Level> Generic = new GenericBOImpl<Level>(level);
         /*
         level.setDescription("teste2");
         level.setTitle("TESTE");
         Generic.save(level);
         */
         fields = Generic.testGenericReader(level);
-        
+        methods = Generic.Obj.getClass().getDeclaredMethods();
+
         JFrame frame = new JFrame();
         frame.setLayout(new GridBagLayout());
         frame.setPreferredSize(new Dimension(990, 990));
@@ -59,7 +64,7 @@ public class Main extends javax.swing.JInternalFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             GridBagConstraints frameConstraints = new GridBagConstraints();        
             JButton addButton = new JButton("test");
-            addButton.addActionListener(new ButtonListener(frame));
+            addButton.addActionListener(new ButtonListener(frame, Generic));
 
             // Add button to frame
             frameConstraints.gridx = 0;
@@ -86,11 +91,14 @@ public class Main extends javax.swing.JInternalFrame {
         static class ButtonListener implements ActionListener
         {
             JFrame frame;
+            GenericBOImpl Generic;
+            
             GridBagConstraints frameConstraints = new GridBagConstraints();        
 
             
-            public ButtonListener(JFrame n_frame){
+            public ButtonListener(JFrame n_frame, GenericBOImpl generic){
                 frame = n_frame;
+                Generic = generic;   
             }
             
             @Override
@@ -105,6 +113,7 @@ public class Main extends javax.swing.JInternalFrame {
                 for(i=0;i<fields.length;i++){
                         JTextField input =new JTextField();
                         input.setText(fields[i].getName());
+                        
                         textFieldConstraints.gridx = i;
                         textFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
                         textFieldConstraints.weightx = 0.5;
@@ -115,7 +124,7 @@ public class Main extends javax.swing.JInternalFrame {
                 for(JTextField input : listOfFields)
                      panel.add(input, textFieldConstraints);
                 JButton addButton = new JButton("enter");
-                addButton.addActionListener(new EnterButtonListener());
+                addButton.addActionListener(new EnterButtonListener(Generic));
                 frameConstraints.gridx = 0;
                 frameConstraints.gridy = 100;
                 frame.add(addButton, frameConstraints);
@@ -126,12 +135,49 @@ public class Main extends javax.swing.JInternalFrame {
             }
 
         }
+        
         static class EnterButtonListener implements ActionListener{
+            GenericBOImpl Generic;
+            public EnterButtonListener(GenericBOImpl generic){
+                Generic = generic;
+            }
+            
             @Override
             public void actionPerformed(ActionEvent arg0){
                 panel.removeAll();
-                for(JTextField jtf : listOfFields)
-                    System.out.println(jtf.getText());
+                    for(Method m : methods){
+                        if(m.getReturnType().equals(void.class))
+                            System.out.println(m.getName() + "\n");
+                            Class [] types = m.getParameterTypes();
+                            for(Class t : types)
+                                System.out.println(t.getName());
+
+                    }
+                for(int i = 0; i < fields.length; i++){
+
+                    /*try {
+    
+                        fields[i] = Generic.getGenericObject().getClass().getDeclaredField(listOfFields.get(i).getText());
+                        //fields[i].set(Generic.Obj, listOfFields.get(i).getText());
+                       
+                        //f = Generic.getGenericObject().getClass().getField(fields[i].getName());
+                        try {
+                        fields[i].set(fields[i].getType(), listOfFields.get(i).getText());
+                        System.out.println("YES");
+                        } catch (IllegalArgumentException ex) {
+                        Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                        } catch (IllegalAccessException ex) {
+                        Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                        }
+                    } catch (NoSuchFieldException ex) {
+                        Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    } catch (SecurityException ex) {
+                        Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    } catch (IllegalArgumentException ex) {
+                        Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    } */
+                    
+                }
                 panel.updateUI();
             }
                 

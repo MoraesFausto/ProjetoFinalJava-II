@@ -25,27 +25,6 @@ public class BookDAOImpl implements BookDAO{
     }
     
     @Override
-    public void save(Book Book) {
-        manager.getTransaction().begin();
-        manager.persist(Book);
-        manager.getTransaction().commit();
-    }
-
-    @Override
-    public void update(Book Book) {
-        manager.getTransaction().begin();
-        manager.merge(Book);
-        manager.getTransaction().commit();    
-    }
-
-    @Override
-    public void delete(Book Book) {
-        manager.getTransaction().begin();
-        manager.remove(Book);
-        manager.getTransaction().commit();
-    }
-
-    @Override
     public List<Book> listAll() {
         List<Book> Books;
         

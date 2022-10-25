@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.hibernate.HibernateException;
 
-import br.edu.utfpr.moraesfausto.englishschool.model.dao.LevelDAO;
-import br.edu.utfpr.moraesfausto.englishschool.model.dao.LevelDAOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAO;
+import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Level;
 
 /**
@@ -17,35 +17,32 @@ import br.edu.utfpr.moraesfausto.englishschool.model.vo.Level;
  * @author f4ustx
  */
 public class LevelBO {
-    private LevelDAO LevelDAO;
+    private GenericDAO<Level> LevelDAO;
 
-    public LevelBO(LevelDAO LevelDAO) {
-        this.LevelDAO = new LevelDAOImpl();
+    public LevelBO() {
+        this.LevelDAO = new GenericDAOImpl();
     }
     
-    public void save(Level Level){
+    public void save(Level level){
         try{
-          LevelDAO.save(Level);
+          LevelDAO.save(level);
         } catch(HibernateException he){
             System.out.println(he);
         }
     }
-    public void update(Level Level){
-        LevelDAO.update(Level);
+    public void update(Level level){
+        try{
+            LevelDAO.update(level);
+        } catch(HibernateException he){
+            System.out.println(he);
+        }
     }
-    public void delete(Level Level){
-        LevelDAO.delete(Level);
+    public void delete(Level level){
+        try{
+            LevelDAO.delete(level);
+        } catch(HibernateException he){
+            System.out.println(he);
+        }
     }
-    
-    public List<Level> listAll(){
-        return LevelDAO.listAll();
-    }
-    
-    public Level listById(Long id){
-        return LevelDAO.listById(id);
-    }
-    
-    public Level listByTitle(String title){
-        return LevelDAO.listByTitle(title);
-    }
+
 }
