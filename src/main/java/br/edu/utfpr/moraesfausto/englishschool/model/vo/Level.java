@@ -31,11 +31,11 @@ public class Level {
     @OneToMany(mappedBy="level")
     private List<Book> book;
 
-    public Long getId() {
+    private Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    private void setId(Long id) {
         this.id = id;
     }
 

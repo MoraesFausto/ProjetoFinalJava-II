@@ -12,12 +12,14 @@ import br.edu.utfpr.moraesfausto.englishschool.model.dao.HibernateConnection;
 import br.edu.utfpr.moraesfausto.englishschool.model.bo.LevelBO;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Level;
 import br.edu.utfpr.moraesfausto.englishschool.model.bo.GenericBOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.controller.saveController;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -138,6 +140,7 @@ public class Main extends javax.swing.JInternalFrame {
         
         static class EnterButtonListener implements ActionListener{
             GenericBOImpl Generic;
+            saveController controller = new saveController();
             public EnterButtonListener(GenericBOImpl generic){
                 Generic = generic;
             }
@@ -145,39 +148,8 @@ public class Main extends javax.swing.JInternalFrame {
             @Override
             public void actionPerformed(ActionEvent arg0){
                 panel.removeAll();
-                    for(Method m : methods){
-                        if(m.getReturnType().equals(void.class))
-                            System.out.println(m.getName() + "\n");
-                            Class [] types = m.getParameterTypes();
-                            for(Class t : types)
-                                System.out.println(t.getName());
+                Generic.Obj = controller.assignValues(methods, listOfFields, Generic.Obj);
 
-                    }
-                for(int i = 0; i < fields.length; i++){
-
-                    /*try {
-    
-                        fields[i] = Generic.getGenericObject().getClass().getDeclaredField(listOfFields.get(i).getText());
-                        //fields[i].set(Generic.Obj, listOfFields.get(i).getText());
-                       
-                        //f = Generic.getGenericObject().getClass().getField(fields[i].getName());
-                        try {
-                        fields[i].set(fields[i].getType(), listOfFields.get(i).getText());
-                        System.out.println("YES");
-                        } catch (IllegalArgumentException ex) {
-                        Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                        } catch (IllegalAccessException ex) {
-                        Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                        }
-                    } catch (NoSuchFieldException ex) {
-                        Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                    } catch (SecurityException ex) {
-                        Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                    } catch (IllegalArgumentException ex) {
-                        Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                    } */
-                    
-                }
                 panel.updateUI();
             }
                 
