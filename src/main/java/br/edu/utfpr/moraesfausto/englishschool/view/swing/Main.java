@@ -5,156 +5,22 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing;
 
-import javax.persistence.EntityManager;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import br.edu.utfpr.moraesfausto.englishschool.model.dao.HibernateConnection;
-import br.edu.utfpr.moraesfausto.englishschool.model.bo.LevelBO;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Level;
-import br.edu.utfpr.moraesfausto.englishschool.model.bo.GenericBOImpl;
-import br.edu.utfpr.moraesfausto.englishschool.controller.saveController;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Person;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
-
 
 /**
  *
  * @author f4ustx
  */
-public class Main extends javax.swing.JInternalFrame {
-    static JPanel panel = new JPanel();
-    static List<JTextField> listOfFields = new ArrayList<JTextField>();;
-    static Field [] fields;
-    private GenericBOImpl genericType;
-    static Method [] methods;
+public class Main extends javax.swing.JFrame {
+
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
     }
-    
-    public static void main(String[] args){
-        Level level = new Level();
-
-        GenericBOImpl<Level> Generic = new GenericBOImpl<Level>(level);
-        /*
-        level.setDescription("teste2");
-        level.setTitle("TESTE");
-        Generic.save(level);
-        */
-        fields = Generic.testGenericReader(level);
-        methods = Generic.Obj.getClass().getDeclaredMethods();
-
-        JFrame frame = new JFrame();
-        frame.setLayout(new GridBagLayout());
-        frame.setPreferredSize(new Dimension(990, 990));
-        frame.setTitle("Teste");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            GridBagConstraints frameConstraints = new GridBagConstraints();        
-            JButton addButton = new JButton("test");
-            addButton.addActionListener(new ButtonListener(frame, Generic));
-
-            // Add button to frame
-            frameConstraints.gridx = 0;
-            frameConstraints.gridy = 0;
-            frame.add(addButton, frameConstraints);
-
-            // Construct panel
-            panel.setPreferredSize(new Dimension(600, 600));
-            panel.setLayout(new GridBagLayout());
-            panel.setBorder(LineBorder.createBlackLineBorder());
-
-            // Add panel to frame
-            frameConstraints.gridx = 0;
-            frameConstraints.gridy = 1;
-            frameConstraints.weighty = 1;
-            frame.add(panel, frameConstraints);
-
-            // Pack frame
-            frame.pack();
-
-            // Make frame visible
-            frame.setVisible(true);
-        }
-        static class ButtonListener implements ActionListener
-        {
-            JFrame frame;
-            GenericBOImpl Generic;
-            
-            GridBagConstraints frameConstraints = new GridBagConstraints();        
-
-            
-            public ButtonListener(JFrame n_frame, GenericBOImpl generic){
-                frame = n_frame;
-                Generic = generic;   
-            }
-            
-            @Override
-            public void actionPerformed(ActionEvent arg0) 
-            {       
-
-                panel.removeAll();
-                GridBagConstraints textFieldConstraints = new GridBagConstraints();
-
-                int rowCnt=4,i,j;
-
-                for(i=0;i<fields.length;i++){
-                        JTextField input =new JTextField();
-                        input.setText(fields[i].getName());
-                        
-                        textFieldConstraints.gridx = i;
-                        textFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
-                        textFieldConstraints.weightx = 0.5;
-                        textFieldConstraints.insets = new Insets(10, 10, 10, 10);
-                        listOfFields.add(input);                        
-                }
-                
-                for(JTextField input : listOfFields)
-                     panel.add(input, textFieldConstraints);
-                JButton addButton = new JButton("enter");
-                addButton.addActionListener(new EnterButtonListener(Generic));
-                frameConstraints.gridx = 0;
-                frameConstraints.gridy = 100;
-                frame.add(addButton, frameConstraints);
-                
-                
-
-                panel.updateUI();
-            }
-
-        }
-        
-        static class EnterButtonListener implements ActionListener{
-            GenericBOImpl Generic;
-            saveController controller = new saveController();
-            public EnterButtonListener(GenericBOImpl generic){
-                Generic = generic;
-            }
-            
-            @Override
-            public void actionPerformed(ActionEvent arg0){
-                panel.removeAll();
-                Generic.Obj = controller.assignValues(methods, listOfFields, Generic.Obj);
-
-                panel.updateUI();
-            }
-                
-        }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -165,21 +31,106 @@ public class Main extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        mainJPanel = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jButton1.setText("Click");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout mainJPanelLayout = new javax.swing.GroupLayout(mainJPanel);
+        mainJPanel.setLayout(mainJPanelLayout);
+        mainJPanelLayout.setHorizontalGroup(
+            mainJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainJPanelLayout.createSequentialGroup()
+                .addGap(142, 142, 142)
+                .addComponent(jButton1)
+                .addContainerGap(171, Short.MAX_VALUE))
+        );
+        mainJPanelLayout.setVerticalGroup(
+            mainJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainJPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addContainerGap(237, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(mainJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(mainJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Level level = new Level();
+        Person person = new Person();
+        SaveScreen saveScreen = new SaveScreen(person);
+        this.mainJPanel.setPreferredSize(new Dimension(990, 990));
+        this.mainJPanel.add(saveScreen);
+        saveScreen.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Main().setVisible(true);
+            }
+        });
+    }
+    
+    private void startSaveScreen(){
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JPanel mainJPanel;
     // End of variables declaration//GEN-END:variables
 }
