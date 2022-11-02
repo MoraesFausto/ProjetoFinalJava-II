@@ -45,9 +45,14 @@ public class GenericBOImpl<T> implements GenericBO<T> {
 
     public Field [] testGenericReader(T object){
         Field [] fields = object.getClass().getDeclaredFields();
-        for(Field field : fields){
-            System.out.println(field.getName());
+        if(object.getClass().getSuperclass() != null){
+             Field [] superFields = object.getClass().getSuperclass().getDeclaredFields();
+             Field [] finalFields = new Field[superFields.length + fields.length];
+             System.arraycopy(superFields, 0, finalFields, 0, superFields.length);
+             System.arraycopy(fields, 0, finalFields, superFields.length, fields.length);
+             return finalFields;
         }
+        
         return fields;
     }
     
