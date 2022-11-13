@@ -18,7 +18,7 @@ import br.edu.utfpr.moraesfausto.englishschool.model.vo.Teacher;
 public class TeacherBO {
     private TeacherDAO TeacherDAO;
 
-    public TeacherBO(TeacherDAO TeacherDAO) {
+    public TeacherBO() {
         this.TeacherDAO = new TeacherDAOImpl();
     }
     

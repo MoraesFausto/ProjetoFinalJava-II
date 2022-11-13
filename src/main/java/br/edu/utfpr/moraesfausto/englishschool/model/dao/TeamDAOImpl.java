@@ -59,7 +59,7 @@ public class TeamDAOImpl implements TeamDAO{
     @Override
     public Team listById(Long id) {
         Team Team;
-        Query query = manager.createQuery("SELECT t from Team b WHERE t.id = " + id);
+        Query query = manager.createQuery("SELECT t from Team t WHERE t.id = " + id);
         Team = (Team) query.getSingleResult();
         return Team;
     }

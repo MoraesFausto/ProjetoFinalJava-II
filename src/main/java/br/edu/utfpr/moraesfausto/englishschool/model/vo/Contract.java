@@ -18,9 +18,8 @@ import javax.persistence.Embeddable;
 public class Contract {
    
     private String description;
-    private LocalDate signingDate;
-    private LocalDate expiringDate;
-    private BigDecimal value;
+    private int yearsLeft;
+    private float value;
     
     public String getDescription() {
         return description;
@@ -30,27 +29,19 @@ public class Contract {
         this.description = description;
     }
 
-    public LocalDate getSigningDate() {
-        return signingDate;
+    public void setYearsLeft(int years){
+        this.yearsLeft = years;
+    }
+    
+    int getYearsLeft(){
+        return this.yearsLeft;
     }
 
-    public void setSigningDate(LocalDate signingDate) {
-        this.signingDate = signingDate;
+    public float getValue() {
+        return this.value;
     }
 
-    public LocalDate getExpiringDate() {
-        return expiringDate;
-    }
-
-    public void setExpiringDate(LocalDate expiringDate) {
-        this.expiringDate = expiringDate;
-    }
-
-    public BigDecimal getValue() {
-        return value;
-    }
-
-    public void setValue(BigDecimal value) {
+    public void setValue(float value) {
         this.value = value;
     }   
     

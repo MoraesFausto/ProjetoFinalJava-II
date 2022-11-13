@@ -19,7 +19,6 @@ import javax.persistence.Table;
 @Table(name="teacher")
 public class Teacher extends Worker {
     
-    private String password;
        
     @ManyToOne
     private Team team;
@@ -27,12 +26,17 @@ public class Teacher extends Worker {
     @OneToMany(mappedBy="teacher")
     private List<SchoolClass> schoolClass;
 
-    public String getPassword() {
-        return password;
+    public Teacher(){
+    
     }
-
-    public void setPassword(String password) {
-        this.password = password;
+    
+    public Teacher(Worker worker){
+        this.name = worker.getName();
+        this.password = worker.getPassword();
+        this.phone = worker.getPhone();
+        this.licenseNumber = worker.getLicenseNumber();
+        this.contract = worker.getContract();
+        this.active = worker.isActive();
     }
 
     public Team getTeam() {

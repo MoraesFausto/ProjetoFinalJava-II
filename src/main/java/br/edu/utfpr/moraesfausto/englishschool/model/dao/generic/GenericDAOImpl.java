@@ -7,6 +7,7 @@ package br.edu.utfpr.moraesfausto.englishschool.model.dao.generic;
 
 import br.edu.utfpr.moraesfausto.englishschool.model.dao.HibernateConnection;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
@@ -39,6 +40,15 @@ public class GenericDAOImpl<T> implements GenericDAO<T>{
         manager.getTransaction().begin();
         manager.remove(object);
         manager.getTransaction().commit();
+    }
+
+    @Override
+    public T listOne(int pkValue, Class clazz) {
+        String jpql = "SELECT t FROM " + clazz.getTypeName() + " t WHERE t.id = " + pkValue;
+        Query query = this.manager.createQuery(jpql);
+        Object obj = query.getSingleResult();
+        
+        return (T) obj;
     }
 
 }

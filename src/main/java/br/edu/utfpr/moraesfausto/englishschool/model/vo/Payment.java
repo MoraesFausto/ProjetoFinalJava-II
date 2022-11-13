@@ -63,6 +63,4 @@ public class Payment {
         this.enrollment = enrollment;
     }
 
-    
-
 }

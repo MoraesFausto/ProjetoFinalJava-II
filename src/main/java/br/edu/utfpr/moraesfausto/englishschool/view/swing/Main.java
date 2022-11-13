@@ -5,13 +5,6 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing;
 
-import br.edu.utfpr.moraesfausto.englishschool.model.vo.Coordinator;
-import br.edu.utfpr.moraesfausto.englishschool.model.vo.Level;
-import br.edu.utfpr.moraesfausto.englishschool.model.vo.Person;
-import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
-import br.edu.utfpr.moraesfausto.englishschool.model.vo.Teacher;
-import java.awt.Dimension;
-
 /**
  *
  * @author f4ustx
@@ -34,82 +27,33 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLayeredPane1 = new javax.swing.JLayeredPane();
-        mainJPanel = new javax.swing.JPanel();
-        studentButton = new javax.swing.JButton();
-        teacherButton = new javax.swing.JButton();
-        coordinatorButton = new javax.swing.JButton();
-        coordinatorButton1 = new javax.swing.JButton();
-
-        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
-        jLayeredPane1.setLayout(jLayeredPane1Layout);
-        jLayeredPane1Layout.setHorizontalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jLayeredPane1Layout.setVerticalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        studentButton.setText("Student");
-        studentButton.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                studentButtonActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
-        teacherButton.setText("Teacher");
-        teacherButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                teacherButtonActionPerformed(evt);
-            }
-        });
-
-        coordinatorButton.setText("Coordinator");
-        coordinatorButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                coordinatorButtonActionPerformed(evt);
-            }
-        });
-
-        coordinatorButton1.setText("Level");
-        coordinatorButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                coordinatorButton1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout mainJPanelLayout = new javax.swing.GroupLayout(mainJPanel);
-        mainJPanel.setLayout(mainJPanelLayout);
-        mainJPanelLayout.setHorizontalGroup(
-            mainJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainJPanelLayout.createSequentialGroup()
-                .addGap(142, 142, 142)
-                .addGroup(mainJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(coordinatorButton1)
-                    .addComponent(studentButton)
-                    .addComponent(teacherButton)
-                    .addComponent(coordinatorButton))
-                .addContainerGap(152, Short.MAX_VALUE))
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(139, 139, 139)
+                .addComponent(jButton1)
+                .addContainerGap(151, Short.MAX_VALUE))
         );
-
-        mainJPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {coordinatorButton, coordinatorButton1, studentButton, teacherButton});
-
-        mainJPanelLayout.setVerticalGroup(
-            mainJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainJPanelLayout.createSequentialGroup()
-                .addGap(69, 69, 69)
-                .addComponent(studentButton)
-                .addGap(18, 18, 18)
-                .addComponent(teacherButton)
-                .addGap(18, 18, 18)
-                .addComponent(coordinatorButton)
-                .addGap(18, 18, 18)
-                .addComponent(coordinatorButton1)
-                .addContainerGap(45, Short.MAX_VALUE))
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(94, 94, 94)
+                .addComponent(jButton1)
+                .addContainerGap(155, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -118,55 +62,26 @@ public class Main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void studentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentButtonActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Student student = new Student();
-        SaveScreen saveScreen = new SaveScreen(student);
-        this.mainJPanel.setPreferredSize(new Dimension(990, 990));
-        this.mainJPanel.add(saveScreen);
-        saveScreen.setVisible(true);
-    }//GEN-LAST:event_studentButtonActionPerformed
-
-    private void teacherButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teacherButtonActionPerformed
-        // TODO add your handling code here:
-        Teacher teacher = new Teacher();
-        SaveScreen saveScreen = new SaveScreen(teacher);
-        this.mainJPanel.setPreferredSize(new Dimension(990, 990));
-        this.mainJPanel.add(saveScreen);
-        saveScreen.setVisible(true);
-    }//GEN-LAST:event_teacherButtonActionPerformed
-
-    private void coordinatorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coordinatorButtonActionPerformed
-        // TODO add your handling code here:
-        Coordinator coordinator = new Coordinator();
-        SaveScreen saveScreen = new SaveScreen(coordinator);
-        this.mainJPanel.setPreferredSize(new Dimension(990, 990));
-        this.mainJPanel.add(saveScreen);
-        saveScreen.setVisible(true);
-    }//GEN-LAST:event_coordinatorButtonActionPerformed
-
-    private void coordinatorButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coordinatorButton1ActionPerformed
-        // TODO add your handling code here:
-        Level level = new Level();
-        SaveScreen saveScreen = new SaveScreen(level);
-        this.mainJPanel.setPreferredSize(new Dimension(990, 990));
-        this.mainJPanel.add(saveScreen);
-        saveScreen.setVisible(true);
-    }//GEN-LAST:event_coordinatorButton1ActionPerformed
+        SaveTeacher saveScreen = new SaveTeacher("Teacher");
+        jPanel1.add(saveScreen);
+        jPanel1.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,17 +117,9 @@ public class Main extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void startSaveScreen(){
-
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton coordinatorButton;
-    private javax.swing.JButton coordinatorButton1;
-    private javax.swing.JLayeredPane jLayeredPane1;
-    private javax.swing.JPanel mainJPanel;
-    private javax.swing.JButton studentButton;
-    private javax.swing.JButton teacherButton;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -17,8 +17,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "coordinator")
 public class Coordinator extends Worker {
-
-    private String password;
     
     @OneToMany(mappedBy="coordinator")
     private List<Event> events;
@@ -26,13 +24,6 @@ public class Coordinator extends Worker {
     @OneToMany(mappedBy="coordinator")
     private List<Team> teams;
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public List<Team> getTeams() {
         return teams;

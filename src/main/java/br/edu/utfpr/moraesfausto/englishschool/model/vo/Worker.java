@@ -18,12 +18,12 @@ import javax.persistence.Table;
 @Table(name="worker")
 public class Worker extends Person {
     
-    private boolean active;
+    protected boolean active;
     
-    private String licenseNumber;
+    protected String licenseNumber;
     
     @Embedded
-    private Contract contract;
+    protected Contract contract;
 
     public boolean isActive() {
         return active;

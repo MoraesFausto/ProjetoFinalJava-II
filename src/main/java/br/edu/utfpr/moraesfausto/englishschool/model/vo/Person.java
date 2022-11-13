@@ -24,11 +24,12 @@ public class Person {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    private String name;
+    protected String name;
 
-    private String phone;
-
-   
+    protected String password;
+    
+    protected String phone;
+       
     public Long getId() {
         return id;
     }
@@ -43,6 +44,14 @@ public class Person {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
     
     public String getPhone() {

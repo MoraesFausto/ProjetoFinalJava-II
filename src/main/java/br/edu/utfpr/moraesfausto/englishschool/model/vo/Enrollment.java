@@ -5,6 +5,7 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.model.vo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.persistence.Embeddable;
 import javax.persistence.GeneratedValue;
@@ -16,34 +17,26 @@ import javax.persistence.Id;
  * @author f4ustx
  */
 @Embeddable
-public class Enrollment {
+public class Enrollment extends Contract {
     
-    private LocalDate signingDate;
-    private LocalDate expiringDate;
-    private float en_value;
+    private LocalDate extensionExpiringDate;
+    private BigDecimal extensionValue;
 
-    public LocalDate getSigningDate() {
-        return signingDate;
+    
+    public LocalDate getExtensionExpiringDate() {
+        return extensionExpiringDate;
     }
 
-    public void setSigningDate(LocalDate signingDate) {
-        this.signingDate = signingDate;
+    public void setExtensionExpiringDate(LocalDate expiringDate) {
+        this.extensionExpiringDate = expiringDate;
     }
 
-    public LocalDate getExpiringDate() {
-        return expiringDate;
+    public BigDecimal getExtensionValue() {
+        return extensionValue;
     }
 
-    public void setExpiringDate(LocalDate expiringDate) {
-        this.expiringDate = expiringDate;
-    }
-
-    public float getValue() {
-        return en_value;
-    }
-
-    public void setValue(float value) {
-        this.en_value = value;
+    public void setVExtensionValue(BigDecimal value) {
+        this.extensionValue = value;
     }
     
 }

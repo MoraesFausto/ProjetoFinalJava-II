@@ -8,6 +8,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Person.class)
 public abstract class Person_ {
 
+	public static volatile SingularAttribute<Person, String> password;
 	public static volatile SingularAttribute<Person, String> phone;
 	public static volatile SingularAttribute<Person, String> name;
 	public static volatile SingularAttribute<Person, Long> id;

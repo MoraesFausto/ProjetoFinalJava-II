@@ -10,7 +10,6 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Teacher_ extends br.edu.utfpr.moraesfausto.englishschool.model.vo.Worker_ {
 
 	public static volatile ListAttribute<Teacher, SchoolClass> schoolClass;
-	public static volatile SingularAttribute<Teacher, String> password;
 	public static volatile SingularAttribute<Teacher, Team> team;
 
 }

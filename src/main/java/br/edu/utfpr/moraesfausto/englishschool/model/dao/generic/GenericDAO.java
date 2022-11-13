@@ -13,4 +13,5 @@ public interface GenericDAO<T> {
     void save(T object);
     void update(T object);
     void delete(T object);
+    T listOne(int pkValue, Class clazz);
 }

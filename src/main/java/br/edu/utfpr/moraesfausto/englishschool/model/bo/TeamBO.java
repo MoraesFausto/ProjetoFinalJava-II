@@ -17,7 +17,7 @@ import br.edu.utfpr.moraesfausto.englishschool.model.vo.Team;
 public class TeamBO {
     private TeamDAO TeamDAO;
 
-    public TeamBO(TeamDAO TeamDAO) {
+    public TeamBO() {
         this.TeamDAO = new TeamDAOImpl();
     }
     

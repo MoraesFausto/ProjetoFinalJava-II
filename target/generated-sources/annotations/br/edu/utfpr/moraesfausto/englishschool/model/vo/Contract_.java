@@ -1,7 +1,5 @@
 package br.edu.utfpr.moraesfausto.englishschool.model.vo;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
@@ -10,10 +8,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Contract.class)
 public abstract class Contract_ {
 
-	public static volatile SingularAttribute<Contract, LocalDate> signingDate;
-	public static volatile SingularAttribute<Contract, LocalDate> expiringDate;
+	public static volatile SingularAttribute<Contract, Integer> yearsLeft;
 	public static volatile SingularAttribute<Contract, String> description;
-	public static volatile SingularAttribute<Contract, BigDecimal> value;
+	public static volatile SingularAttribute<Contract, Float> value;
 
 }
 
