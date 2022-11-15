@@ -26,6 +26,8 @@ public class Grade {
     
     private boolean approved;
     
+    private String observation;
+    
     @ManyToOne
     private Student student;
     
@@ -47,6 +49,24 @@ public class Grade {
     public void setApproved(boolean approved) {
         this.approved = approved;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getObservation() {
+        return observation;
+    }
+
+    public void setObservation(String observation) {
+        this.observation = observation;
+    }
+    
+    
 
     public Student getStudent() {
         return student;

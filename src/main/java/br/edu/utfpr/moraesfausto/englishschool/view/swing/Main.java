@@ -5,6 +5,8 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing;
 
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
+
 /**
  *
  * @author f4ustx
@@ -78,8 +80,12 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        SaveTeacher saveScreen = new SaveTeacher("Teacher");
-        jPanel1.add(saveScreen);
+        Student student = new Student();
+        student.setName("Fausto");
+        student.setPassword("pwd");
+        student.setPhone("901209301");
+        UpdatePerson updatePerson = new UpdatePerson(student);
+        jPanel1.add(updatePerson);
         jPanel1.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 

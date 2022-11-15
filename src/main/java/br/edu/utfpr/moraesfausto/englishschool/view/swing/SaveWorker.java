@@ -20,8 +20,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -36,7 +34,7 @@ import javax.swing.border.LineBorder;
  *
  * @author f4ustx
  */
-public class SaveTeacher extends javax.swing.JInternalFrame {
+public class SaveWorker extends javax.swing.JInternalFrame {
     static JFrame frame;
     static JPanel panel = new JPanel();
     static SaveController saveController = new SaveController();
@@ -51,7 +49,7 @@ public class SaveTeacher extends javax.swing.JInternalFrame {
     /**
      * Creates new form SaveScreen
      */
-    public SaveTeacher(String function) {
+    public SaveWorker(String function) {
         Function = function;
         main(function);
         initComponents();

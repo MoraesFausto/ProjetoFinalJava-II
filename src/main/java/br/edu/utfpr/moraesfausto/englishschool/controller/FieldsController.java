@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
@@ -29,6 +30,7 @@ public class FieldsController {
     public static class GenericFields{
         public Field [] fields;
         public Method [] methods;
+        public Method [] filteredMethods;
         List<Field> listOfFields = new ArrayList<>();
         List<Method> listOfMethods = new ArrayList<>();
 
@@ -37,7 +39,11 @@ public class FieldsController {
         }
 
         public void setMethods(Method [] m){
-            this.methods = m;
+            this.methods = removeMethods(m, true);
+        }
+        
+        public void setFilteredMethods(Method [] m, String mode){
+            this.filteredMethods = removeMethods(m, mode.equals("set"));
         }
 
         public Field [] getFields(){
@@ -76,7 +82,22 @@ public class FieldsController {
                 methods[i] = listOfMethods.get(i);
             }
             return methods;
-    }
+        }
+        
+        
+        public Method [] removeMethods(Method [] methods, boolean ctl){
+            
+            List<Method> setMethods = new ArrayList<>();
+            for(int i = 0; i < methods.length; i++){
+                    if(methods[i].getReturnType().equals(void.class) == ctl && !methods[i].getName().equals("setId"))
+                        setMethods.add(methods[i]);
+            }
+            
+            Method [] finalMethods = new Method[setMethods.size()];
+            for(int i = 0; i < finalMethods.length; i++)
+                finalMethods[i] = setMethods.get(i);
+            return finalMethods;
+        }
         
     }
 }

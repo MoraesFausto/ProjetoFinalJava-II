@@ -6,8 +6,9 @@
 package br.edu.utfpr.moraesfausto.englishschool.view.swing;
 
 import br.edu.utfpr.moraesfausto.englishschool.controller.SaveController;
+import br.edu.utfpr.moraesfausto.englishschool.controller.UpdateController;
 import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
-import br.edu.utfpr.moraesfausto.englishschool.model.vo.Enrollment;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Person;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -16,6 +17,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -29,26 +34,29 @@ import javax.swing.border.LineBorder;
  *
  * @author f4ustx
  */
-public class SaveStudent extends javax.swing.JInternalFrame {
+public class UpdatePerson extends javax.swing.JInternalFrame {
     static JFrame frame;
     static JPanel panel = new JPanel();
     static SaveController saveController = new SaveController();
-    static String Function;
-    static Student Student = new Student();
+    static Person person = new Person();
+    static Student Student;
     static GenericDAOImpl genericDAO;
+    static Object Obj;
+
     /**
      * Creates new form SaveStudent
      */
-    public SaveStudent() {
+    public UpdatePerson(Object obj) {
+        Obj = obj;
         main();
         initComponents();
     }
 
-    public static void main(){
+    public static void main() {
         frame = new JFrame();
         frame.setLayout(new GridBagLayout());
         frame.setPreferredSize(new Dimension(600, 800));
-        frame.setTitle("Add a New Student");
+        frame.setTitle("Update Your Personal Info");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         GridBagConstraints frameConstraints = new GridBagConstraints();
         
@@ -58,7 +66,7 @@ public class SaveStudent extends javax.swing.JInternalFrame {
         frameConstraints.gridy = 0;
 
         // Construct panel
-        panel.setPreferredSize(new Dimension(300, 800));
+        panel.setPreferredSize(new Dimension(300, 300));
         panel.setLayout(new GridBagLayout());
         panel.setBorder(LineBorder.createBlackLineBorder());
         JScrollPane scrollPane = new JScrollPane(panel);
@@ -73,34 +81,39 @@ public class SaveStudent extends javax.swing.JInternalFrame {
 
         // Pack this
         frame.pack();
-        saveController.genericFields = saveController.testGenericReader(Student);
+        saveController.genericFields = saveController.testGenericReader(person);
         saveController.swingFields = saveController.generateGenericFields(saveController.genericFields.fields);
+        JLabel mainLabel = new JLabel();
+        mainLabel.setText("Personal Info");
+        mainLabel.setHorizontalAlignment(JLabel.CENTER);
+        UpdateController updateController = new UpdateController();
         
+        String [] values = updateController.personalInfo(Obj, saveController);
+            // {Student.getName(), Student.getPassword(), Student.getPhone()};
+        
+        
+        panel.add(mainLabel,saveController.swingFields.textFieldConstraints);
+        int i = 2;
         for(JTextField textField : saveController.swingFields.listOfFields){
             JLabel label = new JLabel();
             JLabel lsLabel = new JLabel();
             lsLabel.setText("");
             label.setText(textField.getText());
-            label.setHorizontalAlignment(JLabel.CENTER);
-            if(textField.getText().equals("description")){
-                lsLabel.setText("Enrollment");
-            }else if(textField.getText().equals("name")){
-                lsLabel.setText("Personal Info");
-            }
-                
-            textField.setText("");
+            label.setHorizontalAlignment(JLabel.CENTER);               
+            textField.setText(values[i]);
             panel.add(lsLabel, saveController.swingFields.textFieldConstraints);
             panel.add(label, saveController.swingFields.textFieldConstraints);
             panel.add(textField, saveController.swingFields.textFieldConstraints);
-            
+            i--;
 
         }
-
-        for(JCheckBox boxInput : saveController.swingFields.listOfCheckBoxes)
-            panel.add(boxInput, saveController.swingFields.textFieldConstraints);
+            
+        mainLabel.requestFocusInWindow();
         
         JButton enterButton = new JButton("Enter");
-        enterButton.addActionListener(new EnterButtonListener(Function));
+        
+        enterButton.addActionListener(new EnterButtonListener(Obj));
+        
         enterButton.setHorizontalAlignment(JButton.CENTER);
         
         panel.add(enterButton, saveController.swingFields.textFieldConstraints);
@@ -109,24 +122,27 @@ public class SaveStudent extends javax.swing.JInternalFrame {
     }
     
     static class EnterButtonListener implements ActionListener{
-        String Function;
-        public EnterButtonListener(String function){
-            Function = function;
+        Object obj;
+        
+        public EnterButtonListener(Object obj){
+            Obj = obj;
         }
+        
         @Override
         public void actionPerformed(ActionEvent e) {
-            
-            Student.setName(saveController.swingFields.listOfFields.get(0).getText());
-            Student.setPassword(saveController.swingFields.listOfFields.get(1).getText());
-            Student.setPhone(saveController.swingFields.listOfFields.get(2).getText());
-            Enrollment Enrollment = new Enrollment();
-            Enrollment.setDescription(saveController.swingFields.listOfFields.get(4).getText());
-            Enrollment.setYearsLeft(Integer.parseInt(saveController.swingFields.listOfFields.get(5).getText()));
-            Enrollment.setValue(Float.parseFloat((saveController.swingFields.listOfFields.get(6).getText())));
-            Student.setEnrollment(Enrollment);
+            int i = 0;
+            for(Method m : saveController.genericFields.methods){
+                /*
+                try {
+                    m.invoke(Obj, saveController.swingFields.listOfFields.get(i).getText());
+                } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                    Logger.getLogger(UpdatePerson.class.getName()).log(Level.SEVERE, null, ex);
+                }*/
+                System.out.println(m.getName());
+            }
             
             genericDAO = new GenericDAOImpl();
-            genericDAO.save(Student);
+            genericDAO.update(Obj);
 
             showMessageDialog(null, "Saved!");
             panel.removeAll();

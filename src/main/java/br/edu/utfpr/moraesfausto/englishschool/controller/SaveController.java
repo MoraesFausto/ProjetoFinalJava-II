@@ -29,8 +29,6 @@ public class SaveController<T> {
    public SwingFields swingFields = new SwingFields();
    public GenericFields genericFields = new GenericFields();
 
-
-
     public GenericFields testGenericReader(T object){
         Field [] fields = object.getClass().getDeclaredFields();
         Method [] methods = object.getClass().getDeclaredMethods();
@@ -59,6 +57,9 @@ public class SaveController<T> {
             finalMethods = gen.addGenericMethodsToArray();
             gen.setFields(finalFields);
             gen.setMethods(finalMethods);             
+        }else{
+            gen.setFields(fields);
+            gen.setMethods(methods);
         }
 
         return gen;
