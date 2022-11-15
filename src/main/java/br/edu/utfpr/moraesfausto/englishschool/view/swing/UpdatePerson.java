@@ -104,7 +104,7 @@ public class UpdatePerson extends javax.swing.JInternalFrame {
             panel.add(lsLabel, saveController.swingFields.textFieldConstraints);
             panel.add(label, saveController.swingFields.textFieldConstraints);
             panel.add(textField, saveController.swingFields.textFieldConstraints);
-            i--;
+            i-=2;
 
         }
             

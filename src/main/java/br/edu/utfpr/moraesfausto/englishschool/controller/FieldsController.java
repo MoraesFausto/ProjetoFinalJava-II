@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 import javax.swing.JCheckBox;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
@@ -23,6 +24,7 @@ public class FieldsController {
     public static class SwingFields{
        public List<JTextField> listOfFields=new ArrayList<>();
        public List<JCheckBox> listOfCheckBoxes= new ArrayList<>();
+       public JPasswordField passwordField = new JPasswordField();
        public GridBagConstraints textFieldConstraints;
     }
 

@@ -16,6 +16,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JCheckBox;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
@@ -68,6 +69,7 @@ public class SaveController<T> {
    public SwingFields generateGenericFields(Field [] fields){
            List<JTextField> listOfFields = new ArrayList<JTextField>();
            List<JCheckBox> listOfCheckBoxes = new ArrayList<JCheckBox>();
+           JPasswordField passwordField = new JPasswordField();
            GridBagConstraints textFieldConstraints  = new GridBagConstraints();
 
         int rowCnt=4,i,j;
@@ -78,6 +80,10 @@ public class SaveController<T> {
                             SwingFields embeddableFields = new SwingFields();
                             embeddableFields = generateGenericFields(fields[i].getType().getDeclaredFields());
                             listOfFields.addAll(embeddableFields.listOfFields);
+                        }else if(fields[i].getName().equals("password")){
+                            passwordField.setText(fields[i].getName());
+                            passwordField.setHorizontalAlignment(JPasswordField.CENTER);
+                            
                         }else{
                             JTextField input=new JTextField();
                             input.setText(fields[i].getName());
@@ -97,10 +103,11 @@ public class SaveController<T> {
                     textFieldConstraints.insets = new Insets(7, 7, 7, 7);
                 }
         }
-
+        
         swingFields = new SwingFields();
         swingFields.listOfFields = listOfFields;
         swingFields.listOfCheckBoxes = listOfCheckBoxes;
+        swingFields.passwordField = passwordField;
         swingFields.textFieldConstraints = textFieldConstraints;
         return swingFields;
    }
