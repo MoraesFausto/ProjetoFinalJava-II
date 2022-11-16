@@ -4,11 +4,13 @@
  * and open the template in the editor.
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing;
+import br.edu.utfpr.moraesfausto.englishschool.model.dao.HibernateConnection;
 import javax.swing.UIManager;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.dashboards.StudentDashboard;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
@@ -21,6 +23,7 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main
      */
     public Main() {
+    	//EntityManager manager = HibernateConnection.getInstance();
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
@@ -181,6 +184,7 @@ public class Main extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+        //EntityManager manager = HibernateConnection.getInstance();
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

@@ -9,6 +9,7 @@ import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.UpdatePerson;
 import javax.swing.JDesktopPane;
 import javax.swing.JPanel;
+import br.edu.utfpr.moraesfausto.englishschool.view.swing.ChangePassword;
 
 /**
  *
@@ -116,11 +117,21 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
         jMenu3.add(jMenuItem5);
 
         jMenuItem6.setText("Change Password...");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem6);
 
         jMenu1.add(jMenu3);
 
         jMenuItem4.setText("Exit...");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem4);
 
         jMenuBar1.add(jMenu1);
@@ -188,6 +199,18 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
         updatePerson.setVisible(true);
         mainPanel.add(updatePerson);        
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        this.dispose();        // TODO add your handling code here:
+       // System.exit(0);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        ChangePassword changePassword = new ChangePassword(Student);
+        changePassword.setVisible(true);
+        mainPanel.add(changePassword);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
