@@ -20,7 +20,7 @@ import javax.persistence.Id;
 public class Enrollment extends Contract {
     
     private LocalDate extensionExpiringDate;
-    private BigDecimal extensionValue;
+    private float extensionValue;
 
     
     public LocalDate getExtensionExpiringDate() {
@@ -31,11 +31,11 @@ public class Enrollment extends Contract {
         this.extensionExpiringDate = expiringDate;
     }
 
-    public BigDecimal getExtensionValue() {
+    public float getExtensionValue() {
         return extensionValue;
     }
 
-    public void setVExtensionValue(BigDecimal value) {
+    public void setVExtensionValue(float value) {
         this.extensionValue = value;
     }
     
