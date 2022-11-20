@@ -27,9 +27,6 @@ public class Payment {
     
     @ManyToOne
     private Student student;
-    
-    @Embedded
-    private Enrollment enrollment;
 
     public Long getId() {
         return id;
@@ -53,14 +50,6 @@ public class Payment {
 
     public void setStudent(Student student) {
         this.student = student;
-    }
-
-    public Enrollment getEnrollment() {
-        return enrollment;
-    }
-
-    public void setEnrollment(Enrollment enrollment) {
-        this.enrollment = enrollment;
     }
 
 }

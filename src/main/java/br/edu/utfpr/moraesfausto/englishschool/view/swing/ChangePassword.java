@@ -24,6 +24,10 @@ public class ChangePassword extends javax.swing.JFrame {
         student = obj;
         initComponents();
     }
+    
+    public ChangePassword(){
+    
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
