@@ -11,6 +11,7 @@ public abstract class Grade_ {
 	public static volatile SingularAttribute<Grade, Boolean> approved;
 	public static volatile SingularAttribute<Grade, Test> test;
 	public static volatile SingularAttribute<Grade, Student> student;
+	public static volatile SingularAttribute<Grade, String> observation;
 	public static volatile SingularAttribute<Grade, Long> id;
 	public static volatile SingularAttribute<Grade, Float> points;
 
