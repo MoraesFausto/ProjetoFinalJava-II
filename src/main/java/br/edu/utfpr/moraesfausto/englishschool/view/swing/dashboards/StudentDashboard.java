@@ -34,6 +34,9 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
         initComponents();
         this.welcomeLabel.setText(welcomeLabel.getText() + " " + Student.getName() + "!");
         obj = new Student();
+        
+        /* Teste de novas implementações
+        
         try {
             Method get = obj.getClass().getDeclaredMethod("getContract");
 
@@ -43,7 +46,7 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
             get.invoke(obj);
         } catch (NoSuchMethodException | SecurityException ex) {
             Logger.getLogger(StudentDashboard.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
         
 
     }

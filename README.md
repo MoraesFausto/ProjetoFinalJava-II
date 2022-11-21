@@ -1,21 +1,31 @@
-- [x]    Lembrar de transferir as ferramentas de listagem de métodos e tratamento de casts para uma classe específica, pra limpar o código das views (Controller)
-  
-  
+# Projeto Final Programação Objeto Orientada
 
-  
+## Sistema de Administração de uma Escola de Inglês
 
-- [ ]    Lembrar de verificar mais casos de inputs específicos (JCheckBox por exemplo)
-  
-  
+### Resultados
 
-- [ ]    Criar atributo password para classes Coordinator, Teacher e Student
-  
-  
+#### 20/11/2022
 
-- [ ]    Criar telas de acesso (Coordinator, Teacher e Student)
-  
-  
+- [x] Geração do banco de dados
 
-- [ ]    Criar tela de login para cada
+- [x] Implementação dos DAOs (*Data Access Object*)
+
+- [x] Criação dos BOs (*Business Object*)
+
+- [x] Criar esquemas das Views de Dashboard para as principais classes de uso (Student, Teacher, Coordinator)
+
+- [x] Criar tela de login para classe Student
+
+### Próximos objetivos
+
+- [ ]  Criar tela de login para class Teacher
+
+- [ ]  Criar tela de login para class Coordinator
+
+- [ ]  Implementação completa processo de autenticação
+
+- [ ]  Criação do dispositivo de pagamento
+
+- [ ]  Finalização das ferramentas presentes em cada *dashboard*
 
 
