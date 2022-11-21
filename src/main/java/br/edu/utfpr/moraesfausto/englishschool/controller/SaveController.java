@@ -8,7 +8,6 @@ package br.edu.utfpr.moraesfausto.englishschool.controller;
 import br.edu.utfpr.moraesfausto.englishschool.controller.FieldsController.GenericFields;
 import br.edu.utfpr.moraesfausto.englishschool.controller.FieldsController.SwingFields;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Contract;
-import br.edu.utfpr.moraesfausto.englishschool.model.vo.Enrollment;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.lang.reflect.Field;
@@ -76,7 +75,7 @@ public class SaveController<T> {
         for(i=0;i<fields.length;i++){
                 if(!fields[i].getType().equals(List.class) && !fields[i].getType().equals(Long.class)){
                     if(!fields[i].getType().equals(boolean.class)){
-                        if(fields[i].getType().equals(Contract.class) || fields[i].getType().equals(Enrollment.class)){
+                        if(fields[i].getType().equals(Contract.class)){
                             SwingFields embeddableFields = new SwingFields();
                             embeddableFields = generateGenericFields(fields[i].getType().getDeclaredFields());
                             listOfFields.addAll(embeddableFields.listOfFields);

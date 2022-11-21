@@ -29,7 +29,9 @@ public class Student extends Person {
     private List<Grade> grades;
     
     @Embedded
-    private Enrollment enrollment;
+    private Contract contract;
+
+
             
     public float getSchoolarship() {
         return schoolarship;
@@ -54,14 +56,13 @@ public class Student extends Person {
     public void setGrades(List<Grade> grades) {
         this.grades = grades;
     }
-
-    public Enrollment getEnrollment() {
-        return enrollment;
+  
+    public Contract getContract() {
+        return contract;
     }
 
-    public void setEnrollment(Enrollment enrollment) {
-        this.enrollment = enrollment;
+    public void setContract(Contract contract) {
+        this.contract = contract;
     }
-
     
 }

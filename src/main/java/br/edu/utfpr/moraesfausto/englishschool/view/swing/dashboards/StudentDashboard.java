@@ -5,11 +5,14 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing.dashboards;
 
+import static br.edu.utfpr.moraesfausto.englishschool.model.vo.Grade_.student;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.UpdatePerson;
 import javax.swing.JDesktopPane;
 import javax.swing.JPanel;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.ChangePassword;
+import br.edu.utfpr.moraesfausto.englishschool.view.swing.PaymentView;
+import java.awt.LayoutManager;
 
 /**
  *
@@ -139,6 +142,11 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
         jMenu2.setText("Payments");
 
         jMenuItem1.setText("New Payment...");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem1);
 
         jMenuItem3.setText("List Payments");
@@ -211,6 +219,15 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
         changePassword.setVisible(true);
         mainPanel.add(changePassword);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        System.out.println("Entrou Payment View");
+        PaymentView paymentView = new PaymentView(Student);
+        mainPanel.add(paymentView);
+        paymentView.setVisible(true);
+        paymentView.requestFocus();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

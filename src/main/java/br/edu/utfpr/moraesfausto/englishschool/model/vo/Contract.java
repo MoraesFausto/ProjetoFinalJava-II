@@ -20,6 +20,15 @@ public class Contract {
     private String description;
     private int yearsLeft;
     private float value;
+    private ContractType contractType;
+
+    public ContractType getContractType() {
+        return contractType;
+    }
+
+    public void setContractType(ContractType contractType) {
+        this.contractType = contractType;
+    }
     
     public String getDescription() {
         return description;

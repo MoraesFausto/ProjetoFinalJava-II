@@ -9,6 +9,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Contract_ {
 
 	public static volatile SingularAttribute<Contract, Integer> yearsLeft;
+	public static volatile SingularAttribute<Contract, ContractType> contractType;
 	public static volatile SingularAttribute<Contract, String> description;
 	public static volatile SingularAttribute<Contract, Float> value;
 
