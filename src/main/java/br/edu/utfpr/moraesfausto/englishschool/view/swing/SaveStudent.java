@@ -7,7 +7,7 @@ package br.edu.utfpr.moraesfausto.englishschool.view.swing;
 
 import br.edu.utfpr.moraesfausto.englishschool.controller.SaveController;
 import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
-import br.edu.utfpr.moraesfausto.englishschool.model.vo.Enrollment;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Contract;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -83,7 +83,7 @@ public class SaveStudent extends javax.swing.JInternalFrame {
             label.setText(textField.getText());
             label.setHorizontalAlignment(JLabel.CENTER);
             if(textField.getText().equals("description")){
-                lsLabel.setText("Enrollment");
+                lsLabel.setText("Contract");
             }else if(textField.getText().equals("name")){
                 lsLabel.setText("Personal Info");
             }
@@ -119,11 +119,11 @@ public class SaveStudent extends javax.swing.JInternalFrame {
             Student.setName(saveController.swingFields.listOfFields.get(0).getText());
             Student.setPassword(saveController.swingFields.listOfFields.get(1).getText());
             Student.setPhone(saveController.swingFields.listOfFields.get(2).getText());
-            Enrollment Enrollment = new Enrollment();
-            Enrollment.setDescription(saveController.swingFields.listOfFields.get(4).getText());
-            Enrollment.setYearsLeft(Integer.parseInt(saveController.swingFields.listOfFields.get(5).getText()));
-            Enrollment.setValue(Float.parseFloat((saveController.swingFields.listOfFields.get(6).getText())));
-            Student.setEnrollment(Enrollment);
+            Contract Contract = new Contract();
+            Contract.setDescription(saveController.swingFields.listOfFields.get(4).getText());
+            Contract.setYearsLeft(Integer.parseInt(saveController.swingFields.listOfFields.get(5).getText()));
+            Contract.setValue(Float.parseFloat((saveController.swingFields.listOfFields.get(6).getText())));
+            Student.setContract(Contract);
             
             genericDAO = new GenericDAOImpl();
             genericDAO.save(Student);

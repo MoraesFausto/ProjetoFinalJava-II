@@ -5,17 +5,21 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing.dashboards;
 
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Teacher;
+
 /**
  *
  * @author f4ustx
  */
 public class TeacherDashboard extends javax.swing.JInternalFrame {
-
+    Teacher Teacher;
     /**
      * Creates new form TeacherDashboard
      */
-    public TeacherDashboard() {
+    public TeacherDashboard(Teacher teacher) {
+        Teacher = teacher;
         initComponents();
+        //this.teamLabel.setText(teamLabel.getText() + " " + Teacher.getTeam().getId());
     }
 
     /**
@@ -32,7 +36,7 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        teamLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -57,7 +61,7 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Classes");
 
-        jLabel3.setText("Your Team:");
+        teamLabel.setText("Your Team:");
 
         jMenu3.setText("Personal");
 
@@ -104,8 +108,8 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(2, 2, 2)
-                        .addComponent(jLabel3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                        .addComponent(teamLabel)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 295, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -118,14 +122,14 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
-                        .addComponent(jLabel3)))
+                        .addComponent(teamLabel)))
                 .addContainerGap())
         );
 
@@ -140,7 +144,6 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -153,5 +156,6 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel teamLabel;
     // End of variables declaration//GEN-END:variables
 }

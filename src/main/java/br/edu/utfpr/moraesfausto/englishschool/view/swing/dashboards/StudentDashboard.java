@@ -6,6 +6,7 @@
 package br.edu.utfpr.moraesfausto.englishschool.view.swing.dashboards;
 
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Teacher;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.UpdatePerson;
 import javax.swing.JDesktopPane;
 import javax.swing.JPanel;
@@ -25,6 +26,8 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
         mainPanel = panel;
         Student = student;
         initComponents();
+        this.welcomeLabel.setText(welcomeLabel.getText() + " " + Student.getName() + "!");
+
     }
 
     /**
@@ -39,7 +42,7 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        welcomeLabel = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -56,7 +59,7 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null}
+
             },
             new String [] {
                 "Id", "Day", "Time"
@@ -73,7 +76,7 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel1.setText("Welcome Young Student!");
+        welcomeLabel.setText("Welcome Young Student!");
 
         jLabel2.setText("Class");
 
@@ -139,6 +142,11 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
         jMenu2.setText("Payments");
 
         jMenuItem1.setText("New Payment...");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem1);
 
         jMenuItem3.setText("List Payments");
@@ -158,7 +166,7 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
                         .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)))
+                            .addComponent(welcomeLabel)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(93, 93, 93)
                         .addComponent(jLabel2)))
@@ -180,11 +188,11 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
                         .addGap(64, 64, 64)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel1))
+                            .addComponent(welcomeLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(78, Short.MAX_VALUE))
@@ -212,9 +220,16 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
         mainPanel.add(changePassword);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        Teacher t = new Teacher();
+        TeacherDashboard td = new TeacherDashboard(t);
+        td.setVisible(true);
+        mainPanel.add(td);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
@@ -231,5 +246,6 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables
 }
