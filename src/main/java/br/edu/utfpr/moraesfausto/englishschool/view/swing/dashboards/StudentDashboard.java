@@ -5,12 +5,17 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing.dashboards;
 
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Contract;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Teacher;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.UpdatePerson;
 import javax.swing.JDesktopPane;
 import javax.swing.JPanel;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.ChangePassword;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,14 +24,27 @@ import br.edu.utfpr.moraesfausto.englishschool.view.swing.ChangePassword;
 public class StudentDashboard extends javax.swing.JInternalFrame {
     Student Student = new Student();
     JDesktopPane mainPanel;
+    Object obj;
     /**
      * Creates new form TeacherDashboard
      */
-    public StudentDashboard(JDesktopPane panel, Student student) {
+    public StudentDashboard(JDesktopPane panel, Student student) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         mainPanel = panel;
         Student = student;
         initComponents();
         this.welcomeLabel.setText(welcomeLabel.getText() + " " + Student.getName() + "!");
+        obj = new Student();
+        try {
+            Method get = obj.getClass().getDeclaredMethod("getContract");
+
+            Method set = obj.getClass().getDeclaredMethod("setContract", Contract.class);
+            Contract c = new Contract();
+            set.invoke(obj, c);
+            get.invoke(obj);
+        } catch (NoSuchMethodException | SecurityException ex) {
+            Logger.getLogger(StudentDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
 
     }
 

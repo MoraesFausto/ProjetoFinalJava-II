@@ -37,6 +37,7 @@ br/edu/utfpr/moraesfausto/englishschool/view/swing/AddGrade$5.class
 br/edu/utfpr/moraesfausto/englishschool/model/vo/Coordinator.class
 br/edu/utfpr/moraesfausto/englishschool/model/vo/Payment.class
 br/edu/utfpr/moraesfausto/englishschool/model/dao/SubjectDAO.class
+br/edu/utfpr/moraesfausto/englishschool/view/swing/dashboards/StudentDashboard$6.class
 br/edu/utfpr/moraesfausto/englishschool/model/vo/SchoolClass_.class
 br/edu/utfpr/moraesfausto/englishschool/view/swing/SaveWorker$EnterButtonListener.class
 br/edu/utfpr/moraesfausto/englishschool/model/dao/EventDAOImpl.class
@@ -62,7 +63,6 @@ br/edu/utfpr/moraesfausto/englishschool/view/swing/Main$2.class
 br/edu/utfpr/moraesfausto/englishschool/controller/FieldsController$SwingFields.class
 br/edu/utfpr/moraesfausto/englishschool/model/vo/Person_.class
 br/edu/utfpr/moraesfausto/englishschool/model/dao/generic/GenericDAO.class
-br/edu/utfpr/moraesfausto/englishschool/model/vo/Enrollment.class
 br/edu/utfpr/moraesfausto/englishschool/controller/UpdateController.class
 br/edu/utfpr/moraesfausto/englishschool/model/vo/Grade.class
 br/edu/utfpr/moraesfausto/englishschool/view/swing/dashboards/TeacherDashboard$1.class
@@ -110,7 +110,6 @@ br/edu/utfpr/moraesfausto/englishschool/model/dao/TestDAOImpl.class
 br/edu/utfpr/moraesfausto/englishschool/view/swing/ChangePassword$2.class
 br/edu/utfpr/moraesfausto/englishschool/view/swing/SaveStudent.class
 br/edu/utfpr/moraesfausto/englishschool/model/dao/MeetingDAO.class
-br/edu/utfpr/moraesfausto/englishschool/model/vo/Enrollment_.class
 br/edu/utfpr/moraesfausto/englishschool/model/vo/Subject_.class
 br/edu/utfpr/moraesfausto/englishschool/model/bo/PaymentBO.class
 br/edu/utfpr/moraesfausto/englishschool/model/dao/GradeDAO.class

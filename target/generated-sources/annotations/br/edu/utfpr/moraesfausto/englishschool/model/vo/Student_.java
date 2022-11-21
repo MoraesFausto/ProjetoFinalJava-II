@@ -11,8 +11,8 @@ public abstract class Student_ extends br.edu.utfpr.moraesfausto.englishschool.m
 
 	public static volatile SingularAttribute<Student, SchoolClass> schoolClass;
 	public static volatile SingularAttribute<Student, Float> schoolarship;
+	public static volatile SingularAttribute<Student, Contract> contract;
 	public static volatile ListAttribute<Student, Grade> grades;
-	public static volatile SingularAttribute<Student, Enrollment> enrollment;
 
 }
 
