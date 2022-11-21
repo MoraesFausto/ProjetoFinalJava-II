@@ -8,6 +8,7 @@ import br.edu.utfpr.moraesfausto.englishschool.model.dao.HibernateConnection;
 import javax.swing.UIManager;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.dashboards.StudentDashboard;
+import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -170,9 +171,15 @@ public class Main extends javax.swing.JFrame {
         student.setName("Fausto");
         student.setPassword("pwd");
         student.setPhone("901209301");
-        StudentDashboard studentDashboard = new StudentDashboard(jDesktopPane1, student);
-        this.jDesktopPane1.add(studentDashboard);
-        studentDashboard.setVisible(true);
+        StudentDashboard studentDashboard;
+        try {
+            studentDashboard = new StudentDashboard(jDesktopPane1, student);
+            this.jDesktopPane1.add(studentDashboard);
+            studentDashboard.setVisible(true);
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
