@@ -5,8 +5,6 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.model.vo;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import javax.persistence.Embeddable;
 
 
@@ -33,7 +31,7 @@ public class Contract {
         this.yearsLeft = years;
     }
     
-    int getYearsLeft(){
+    public int getYearsLeft(){
         return this.yearsLeft;
     }
 

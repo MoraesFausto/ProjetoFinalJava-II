@@ -5,6 +5,8 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.controller;
 
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Contract;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Person;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -18,18 +20,39 @@ import java.util.logging.Logger;
  */
 public class UpdateController {
     public String [] personalInfo(Object obj, SaveController saveController){
-        Method [] methods = obj.getClass().getSuperclass().getDeclaredMethods();
+        Class clazz = obj.getClass();
+        while(!clazz.equals(Person.class))
+            clazz = clazz.getSuperclass();
+            
+        Method [] methods = clazz.getDeclaredMethods();
         saveController.genericFields.setFilteredMethods(methods, "get");
         String [] info = new String [saveController.genericFields.filteredMethods.length];
         int i = 0;
         for(Method m : saveController.genericFields.filteredMethods){
-            try {
-                info[i] = (String) m.invoke(obj);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                Logger.getLogger(UpdateController.class.getName()).log(Level.SEVERE, null, ex);
+            if(!m.getReturnType().equals(Contract.class) && !m.getReturnType().equals(Long.class)){
+                try {
+                    info[i] = (String) m.invoke(obj);
+                } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                    Logger.getLogger(UpdateController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             i++;
         }
         return info;
+    }
+    
+    public boolean booleanInfo(Object obj, SaveController saveController){
+        try {
+            Method active = obj.getClass().getDeclaredMethod("getActive");
+            try {
+                boolean res = Boolean.parseBoolean((String) active.invoke(obj));
+                return res;
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                Logger.getLogger(UpdateController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (NoSuchMethodException | SecurityException ex) {
+            Logger.getLogger(UpdateController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }

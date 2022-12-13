@@ -5,32 +5,52 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing;
 import br.edu.utfpr.moraesfausto.englishschool.model.dao.HibernateConnection;
+import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Book;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Contract;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Coordinator;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Person;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Level;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Meeting;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.ScheduleDays;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.ScheduleMeetingTimes;
+
 import javax.swing.UIManager;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Subject;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Teacher;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Test;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.TestType;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.dashboards.StudentDashboard;
 import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.naming.AuthenticationException;
+import static javax.swing.JOptionPane.showMessageDialog;
+
 
 /**
  *
  * @author f4ustx
  */
 public class Main extends javax.swing.JFrame {
-    
+     GenericDAOImpl generic = new GenericDAOImpl();
+
     /**
      * Creates new form Main
      */
     public Main() {
-    	//EntityManager manager = HibernateConnection.getInstance();
+        initSystem();
+    	EntityManager manager = HibernateConnection.getInstance();
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
@@ -65,6 +85,11 @@ public class Main extends javax.swing.JFrame {
         });
 
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         jPasswordField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
@@ -75,9 +100,9 @@ public class Main extends javax.swing.JFrame {
         jLabel2.setText("English School");
 
         jLabel3.setFont(new java.awt.Font("Noto Sans Light", 1, 24)); // NOI18N
-        jLabel3.setText("Student");
+        jLabel3.setText("Sign In");
 
-        jLabel4.setText("ID");
+        jLabel4.setText("Email");
 
         jLabel5.setText("Password");
 
@@ -112,15 +137,15 @@ public class Main extends javax.swing.JFrame {
                                 .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(78, 78, 78))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(128, 128, 128))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addGap(107, 107, 107))))
+                        .addGap(107, 107, 107))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(119, 119, 119))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
-                .addGap(92, 92, 92))
+                .addGap(98, 98, 98))
         );
 
         jDesktopPane1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton2, jPasswordField1, jTextField1});
@@ -167,20 +192,22 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Student student = new Student();
-        student.setName("Fausto");
-        student.setPassword("pwd");
-        student.setPhone("901209301");
-        StudentDashboard studentDashboard;
+        Person person = new Person();
+        
+        String email = jTextField1.getText();
+         char[] password = jPasswordField1.getPassword();
+        viewFactory factory = new viewFactory();
         try {
-            studentDashboard = new StudentDashboard(jDesktopPane1, student);
-            this.jDesktopPane1.add(studentDashboard);
-            studentDashboard.setVisible(true);
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            factory.newScreen(email, String.valueOf(password), this.jDesktopPane1, this.generic);
+        } catch (InvocationTargetException | IllegalAccessException | AuthenticationException ex) {
+
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,6 +243,75 @@ public class Main extends javax.swing.JFrame {
                 new Main().setVisible(true);
             }
         });
+    }
+    
+    public void initSystem(){
+        Contract contract = new Contract();
+        contract.setDescription("aaaaaa");
+        contract.setValue((float) 10.2);
+        contract.setYearsLeft(2);
+        Student student = new Student();
+        student.setName("Fausto");
+        student.setPassword("pwd");
+        student.setPhone("901209301");
+        student.setContract(contract);
+        student.setEmail("student@student");
+        
+        Teacher teacher = new Teacher();
+        teacher.setContract(contract);
+        teacher.setName("Fabio");
+        teacher.setPassword("pwd");
+        teacher.setPhone("99999999");
+        teacher.setEmail("teacher@teacher");
+        
+        Coordinator coordinator = new Coordinator();
+        coordinator.setContract(contract);
+        coordinator.setName("Arthur");
+        coordinator.setPassword("pwd");
+        coordinator.setPhone("8888888");
+        coordinator.setEmail("admin@admin");
+        
+        Level level = new Level();
+        level.setDescription("Starting to Learn");
+        level.setTitle("NerdHouse Book 1");
+        
+        Subject subject = new Subject();
+        subject.setDescription("Basic Gramatic Rules");
+        subject.setTitle("Gramatic");
+        
+        
+        Book book = new Book();
+        book.setValue((float) 89.99);
+        book.setLevel(level);
+        book.setSubject(subject);
+        
+        
+        Test test = new Test();
+        test.setMinGrade((float) 6.0);
+        test.setTestType(TestType.LISTENING);
+        test.setBook(book);
+        
+        List<String> guests = new ArrayList();
+        guests.add("ulio");
+        guests.add("maria");
+        
+        Meeting meeting = new Meeting();
+        meeting.setTitle("Weekly Meeting");
+        meeting.setMeetingTime(ScheduleMeetingTimes.MORNING);
+        meeting.setScheduleDay(ScheduleDays.WEDNESDAY);
+        meeting.setTopic("Test");
+        meeting.setGuestName(guests);
+  
+        
+        this.generic.save(student);
+        this.generic.save(teacher);
+        this.generic.save(coordinator);
+        this.generic.save(level);
+        this.generic.save(subject);
+        this.generic.save(book);
+        this.generic.save(test);
+        this.generic.save(meeting);
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

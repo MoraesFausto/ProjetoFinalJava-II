@@ -95,6 +95,7 @@ public class UpdatePerson extends javax.swing.JInternalFrame {
         panel.add(mainLabel,saveController.swingFields.textFieldConstraints);
         int i = 2;
         for(JTextField textField : saveController.swingFields.listOfFields){
+            System.out.println(values[i]);
             JLabel label = new JLabel();
             JLabel lsLabel = new JLabel();
             lsLabel.setText("");
@@ -106,6 +107,18 @@ public class UpdatePerson extends javax.swing.JInternalFrame {
             panel.add(textField, saveController.swingFields.textFieldConstraints);
             i-=2;
 
+        }
+        
+        for(JCheckBox box_input : saveController.swingFields.listOfCheckBoxes){
+            JLabel label = new JLabel();
+            JLabel lsLabel = new JLabel();
+            lsLabel.setText("");
+            label.setText(box_input.getText());
+            boolean res = updateController.booleanInfo(Obj, saveController);
+            box_input.setSelected(res);
+            panel.add(lsLabel, saveController.swingFields.textFieldConstraints);
+            panel.add(label, saveController.swingFields.textFieldConstraints);
+            panel.add(box_input);
         }
             
         mainLabel.requestFocusInWindow();
@@ -132,13 +145,13 @@ public class UpdatePerson extends javax.swing.JInternalFrame {
         public void actionPerformed(ActionEvent e) {
             int i = 0;
             for(Method m : saveController.genericFields.methods){
-                /*
-                try {
-                    m.invoke(Obj, saveController.swingFields.listOfFields.get(i).getText());
-                } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                    Logger.getLogger(UpdatePerson.class.getName()).log(Level.SEVERE, null, ex);
-                }*/
-                System.out.println(m.getName());
+                
+                    try {
+                        m.invoke(Obj, saveController.swingFields.listOfFields.get(i).getText());
+                    } catch (InvocationTargetException | IllegalAccessException | IllegalArgumentException ex) {
+                        Logger.getLogger(UpdatePerson.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                
             }
             
             genericDAO = new GenericDAOImpl();

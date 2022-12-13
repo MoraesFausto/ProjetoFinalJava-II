@@ -29,6 +29,9 @@ public class Grade {
     private String observation;
     
     @ManyToOne
+    private Teacher teacher;
+    
+    @ManyToOne
     private Student student;
     
     @ManyToOne
@@ -65,8 +68,14 @@ public class Grade {
     public void setObservation(String observation) {
         this.observation = observation;
     }
-    
-    
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }    
 
     public Student getStudent() {
         return student;

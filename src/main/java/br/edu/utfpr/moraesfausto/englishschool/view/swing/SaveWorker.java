@@ -44,13 +44,15 @@ public class SaveWorker extends javax.swing.JInternalFrame {
     static Coordinator coordinator;
     static Team team = new Team();
     static TeamBO teamBO;
+    static GenericDAOImpl genericDAO;
     
 
     /**
      * Creates new form SaveScreen
      */
-    public SaveWorker(String function) {
+    public SaveWorker(String function, GenericDAOImpl generic) {
         Function = function;
+        genericDAO = generic;
         main(function);
         initComponents();
     }
@@ -69,7 +71,7 @@ public class SaveWorker extends javax.swing.JInternalFrame {
         frameConstraints.gridy = 0;
 
         // Construct panel
-        panel.setPreferredSize(new Dimension(300, 800));
+        panel.setPreferredSize(new Dimension(300, 1000));
         panel.setLayout(new GridBagLayout());
         panel.setBorder(LineBorder.createBlackLineBorder());
         JScrollPane scrollPane = new JScrollPane(panel);
@@ -124,10 +126,6 @@ public class SaveWorker extends javax.swing.JInternalFrame {
         enterButton.setHorizontalAlignment(JButton.CENTER);
         
         panel.add(enterButton, saveController.swingFields.textFieldConstraints);
-        
-
-        
-        // Make this visible
         frame.setVisible(true);
 
     }
@@ -158,9 +156,16 @@ public class SaveWorker extends javax.swing.JInternalFrame {
                 teamBO.save(team);
                 teacher = new Teacher(worker);
                 teacher.setTeam(teamBO.listById(Long.parseLong(saveController.swingFields.listOfFields.get(7).getText())));
-                GenericDAOImpl genericDAO = new GenericDAOImpl();
+                
                 genericDAO.save(teacher);
+            }else if(Function.equals("Coordinator")){
+                 coordinator = new Coordinator(worker);
+                 genericDAO.save(coordinator);
+
+                 team.setCoordinator(coordinator);
+                 genericDAO.save(team);
             }
+            
                 
             /*
             

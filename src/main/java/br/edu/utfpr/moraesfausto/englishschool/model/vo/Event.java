@@ -10,8 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.LocalDate;
 import javax.persistence.ManyToOne;
+import java.sql.Date;
 
 
 /**
@@ -26,8 +26,8 @@ public class Event {
     
     private String title;
     
-    private LocalDate firstDay;
-    private LocalDate lastDay;
+    private Date firstDay;
+    private Date lastDay;
     
     private float budget;
     private float profit;
@@ -52,19 +52,19 @@ public class Event {
         this.title = title;
     }
 
-    public LocalDate getFirstDay() {
+    public Date getFirstDay() {
         return firstDay;
     }
 
-    public void setFirstDay(LocalDate firstDay) {
+    public void setFirstDay(Date firstDay) {
         this.firstDay = firstDay;
     }
 
-    public LocalDate getLastDay() {
+    public Date getLastDay() {
         return lastDay;
     }
 
-    public void setLastDay(LocalDate lastDay) {
+    public void setLastDay(Date lastDay) {
         this.lastDay = lastDay;
     }
 
@@ -90,6 +90,10 @@ public class Event {
 
     public void setCoordinator(Coordinator coordinator) {
         this.coordinator = coordinator;
+    }
+
+    public void setBudget(int selectedRow, int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

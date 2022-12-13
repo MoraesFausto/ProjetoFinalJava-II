@@ -5,6 +5,7 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.model.vo;
 
+import java.time.LocalDate;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.sql.Date;
 
 /**
  *
@@ -24,6 +26,10 @@ public class Payment {
     private Long id;
     
     private float value;
+    
+    private PaymentType paymentType;
+    
+    private Date paymentDate;
     
     @ManyToOne
     private Student student;
@@ -44,6 +50,22 @@ public class Payment {
         this.value = value;
     }
 
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public Date getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+       
     public Student getStudent() {
         return student;
     }

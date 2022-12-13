@@ -24,6 +24,19 @@ public class Coordinator extends Worker {
     @OneToMany(mappedBy="coordinator")
     private List<Team> teams;
 
+    public Coordinator(){
+    
+    }
+    
+    public Coordinator(Worker worker) {
+        this.name = worker.getName();
+        this.password = worker.getPassword();
+        this.phone = worker.getPhone();
+        this.licenseNumber = worker.getLicenseNumber();
+        this.contract = worker.getContract();
+        this.active = worker.isActive();
+    }
+
 
     public List<Team> getTeams() {
         return teams;

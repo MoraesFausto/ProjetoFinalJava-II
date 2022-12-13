@@ -5,8 +5,29 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing.dashboards;
 
-import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
+import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Coordinator;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Event;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Grade;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Meeting;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.ScheduleDays;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.ScheduleMeetingTimes;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Team;
+import br.edu.utfpr.moraesfausto.englishschool.view.swing.SaveEvent;
+import br.edu.utfpr.moraesfausto.englishschool.view.swing.SaveStudent;
+import br.edu.utfpr.moraesfausto.englishschool.view.swing.SaveTeam;
+import br.edu.utfpr.moraesfausto.englishschool.view.swing.SaveWorker;
+import java.beans.PropertyVetoException;
 import java.lang.reflect.Method;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JDesktopPane;
+import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,15 +35,62 @@ import java.lang.reflect.Method;
  */
 public class CoordinatorDashboard extends javax.swing.JInternalFrame {
 
-    Student student = new Student();
+    private Event event = new Event();
+    private Team team = new Team();
+    private SaveWorker saveWorker;
+    private JDesktopPane mainPanel;
+    private GenericDAOImpl Generic;
+    private Coordinator coordinator;
+    private int selectedRow;
+ 
     /**
      * Creates new form CoordinatorDashboard
      */
-    public CoordinatorDashboard() {
+    public CoordinatorDashboard(Coordinator coordinator, JDesktopPane pane, GenericDAOImpl generic) {
+        this.mainPanel = pane;
+        this.coordinator = coordinator;
+        this.Generic = generic;
         initComponents();
-        //this.welcomeLabel.setText(welcomeLabel.getText() + " " + Student.getName() + "!");
+        this.welcomeLabel.setText(welcomeLabel.getText() + " " + coordinator.getName() + "!");
+        populateTable();
+    }
+ 
+    public Object getSelectedRow(JTable jTable, Class clazz){
+        this.selectedRow = jTable.getSelectedRow();
+        int id = (int) jTable.getValueAt(this.selectedRow, 0);
+        Object obj = Generic.listOne(clazz, id);
+        return obj;
+    }
         
-
+    public void populateTable(){
+        List<Event> events;
+        List<Team> teams;
+        
+        events = Generic.listAll(Event.class);
+        teams = Generic.listAll(Team.class);
+        
+        if(events.isEmpty() && teams.isEmpty() && jTable1.getRowCount() == 0 && jTable2.getRowCount() == 0)
+            return;        
+        
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        
+        for(Event e : events){
+            model.addRow(new Object[]{
+                Math.toIntExact(e.getId()), e.getTitle(), String.valueOf(e.getFirstDay()), String.valueOf(e.getLastDay()),
+                e.getBudget(), e.getProfit()
+            });
+        }
+        
+        model = (DefaultTableModel) jTable2.getModel();
+        model.setRowCount(0);
+        
+        for(Team t : teams){
+            model.addRow(new Object[]{
+                Math.toIntExact(t.getId()), Math.toIntExact(t.getMeeting().getId()), 
+                String.valueOf(t.getMeeting().getMeetingTime()),String.valueOf(t.getMeeting().getScheduleDay()) 
+            });
+        }
     }
 
     /**
@@ -41,6 +109,10 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
         jTable2 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         welcomeLabel = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -53,45 +125,108 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenu7 = new javax.swing.JMenu();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
+        jMenuItem13 = new javax.swing.JMenuItem();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "Title", "firstDay", "lastDay", "Budget", "Profit Expected"
+                "Event ID", "Title", "First Day", "Last Day", "Budget", "Profit Expected"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
+            jTable1.getColumnModel().getColumn(4).setResizable(false);
+            jTable1.getColumnModel().getColumn(5).setResizable(false);
+        }
 
         jLabel1.setText("Events");
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Team ID", "Meeting ID"
+                "Team ID", "Meeting ID", "Meeting Time", "Meeting Day"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
+        if (jTable2.getColumnModel().getColumnCount() > 0) {
+            jTable2.getColumnModel().getColumn(0).setResizable(false);
+            jTable2.getColumnModel().getColumn(1).setResizable(false);
+            jTable2.getColumnModel().getColumn(2).setResizable(false);
+            jTable2.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         jLabel2.setText("Teams");
 
         welcomeLabel.setText("Welcome Coordinator");
+
+        jButton1.setText("Update");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Delete");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Update");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Delete");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jMenu5.setText("Profile");
 
@@ -99,6 +234,11 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
         jMenu5.add(jMenuItem1);
 
         jMenuItem2.setText("Exit...");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem2);
 
         jMenuBar1.add(jMenu5);
@@ -106,20 +246,45 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
         jMenu1.setText("New");
 
         jMenuItem7.setText("New Event...");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem7);
 
         jMenuItem5.setText("New Student...");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem5);
 
         jMenuItem6.setText("New Team...");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem6);
 
         jMenu6.setText("New Worker...");
 
         jMenuItem8.setText("New Coordinator...");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem8);
 
         jMenuItem9.setText("New Teacher...");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem9);
 
         jMenu1.add(jMenu6);
@@ -128,28 +293,24 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
 
         jMenu2.setText("Edit");
 
-        jMenuItem3.setText("Edit Event...");
-        jMenu2.add(jMenuItem3);
-
         jMenuItem4.setText("Edit Student...");
         jMenu2.add(jMenuItem4);
 
-        jMenuItem10.setText("Edit Team...");
-        jMenu2.add(jMenuItem10);
-
-        jMenu7.setText("Edit Worker...");
-
-        jMenuItem11.setText("Edit Coordinator...");
-        jMenu7.add(jMenuItem11);
-
-        jMenuItem12.setText("Edit Teacher...");
-        jMenu7.add(jMenuItem12);
-
-        jMenu2.add(jMenu7);
+        jMenuItem14.setText("Edit Teacher...");
+        jMenu2.add(jMenuItem14);
 
         jMenuBar1.add(jMenu2);
 
         jMenu4.setText("Help");
+
+        jMenuItem13.setText("Refresh...");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem13);
+
         jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
@@ -162,43 +323,168 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 586, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 586, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton3))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(283, 283, 283)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(welcomeLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(66, 66, 66))
+                        .addGap(12, 12, 12)
+                        .addComponent(welcomeLabel)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jScrollPane1, jScrollPane2});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(welcomeLabel)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(welcomeLabel))
-                .addGap(49, 49, 49)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addGap(25, 25, 25))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        SaveEvent saveEvent  = new SaveEvent(this.coordinator, this.Generic, this);
+        saveEvent.setVisible(true);
+        mainPanel.add(saveEvent);
+        
+        try {
+            saveEvent.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(CoordinatorDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        SaveStudent saveStudent = new SaveStudent(this.Generic);
+        saveStudent.setVisible(true);
+        mainPanel.add(saveStudent);
+        try {
+            saveStudent.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(CoordinatorDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        saveWorker = new SaveWorker("Coordinator", this.Generic);
+        saveWorker.setVisible(true);
+        mainPanel.add(saveWorker);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // TODO add your handling code here:
+        saveWorker = new SaveWorker("Teacher", this.Generic);
+        saveWorker.setVisible(true);
+        mainPanel.add(saveWorker);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        SaveTeam saveTeam = new SaveTeam(this.Generic);
+        saveTeam.setVisible(true);
+        mainPanel.add(saveTeam);
+        try {
+            saveTeam.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(CoordinatorDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        // TODO add your handling code here:
+        populateTable();
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        this.team = (Team) getSelectedRow(jTable2, Team.class);
+        Meeting meeting = (Meeting) Generic.listOne(Meeting.class, (int) jTable2.getValueAt(this.selectedRow, 1));
+        
+        meeting.setMeetingTime(ScheduleMeetingTimes.valueOf((String) jTable2.getValueAt(this.selectedRow, 2)));
+        meeting.setScheduleDay(ScheduleDays.valueOf((String) jTable2.getValueAt(this.selectedRow, 3)));
+        this.team.setMeeting(meeting);
+        Generic.update(this.team);
+        populateTable();
+        showMessageDialog(null, "Updated");
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        this.team = (Team) getSelectedRow(jTable2, Team.class);
+        Generic.delete(this.team);
+        populateTable();
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.event = (Event) getSelectedRow(jTable1, Event.class);
+        this.event.setTitle((String) jTable1.getValueAt(this.selectedRow, 1));
+        this.event.setFirstDay(Date.valueOf((String) jTable1.getValueAt(this.selectedRow, 2)));
+        this.event.setLastDay(Date.valueOf((String) jTable1.getValueAt(this.selectedRow, 3)));
+        this.event.setBudget((float) jTable1.getValueAt(this.selectedRow, 4));
+        this.event.setProfit((float) jTable1.getValueAt(this.selectedRow, 5));
+        
+        Generic.update(this.event);
+        populateTable();
+        showMessageDialog(null, "Updated");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.event = (Event) getSelectedRow(jTable1, Event.class);
+        Generic.delete(this.event);
+        populateTable();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
@@ -206,14 +492,11 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;

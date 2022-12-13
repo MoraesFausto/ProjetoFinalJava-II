@@ -6,8 +6,11 @@
 package br.edu.utfpr.moraesfausto.englishschool.model.dao.generic;
 
 import br.edu.utfpr.moraesfausto.englishschool.model.dao.HibernateConnection;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Grade;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -43,8 +46,40 @@ public class GenericDAOImpl<T> implements GenericDAO<T>{
     }
 
     @Override
-    public T listOne(int pkValue, Class clazz) {
+    public T listOne(Class clazz, int pkValue) {
         String jpql = "SELECT t FROM " + clazz.getTypeName() + " t WHERE t.id = " + pkValue;
+        Query query = this.manager.createQuery(jpql);
+        Object obj = query.getSingleResult();
+        
+        return (T) obj;
+    }
+    
+    public List<T> listAll(Class clazz){
+        List<T> results;
+        TypedQuery query = manager.createQuery("SELECT t from " + clazz.getTypeName() + " t", clazz);
+        results = query.getResultList();
+        return results;
+    }
+    
+    public T findOne(Class clazz, String pkName, int pkValue){
+        String jpql = "SELECT t FROM " + clazz.getTypeName() + " t WHERE t." + pkName + " = " + pkValue;
+        Query query = this.manager.createQuery(jpql);
+        Object obj = query.getSingleResult();
+        
+        return (T) obj;
+    }
+    
+    public List<Object> findAllBy(Class clazz, String fkName, int fkValue){
+        String jpql = "SELECT t FROM " + clazz.getTypeName() + " t WHERE t." + fkName + " = " + fkValue;
+        Query query = this.manager.createQuery(jpql);
+        List<Object> resultList = query.getResultList();
+        
+        return resultList;
+    }
+    
+    public T findOneByEmail(Class clazz, String fieldValue){
+        String jpql = "SELECT t FROM " + clazz.getTypeName() + " t WHERE t.email = '" + fieldValue + "'";
+        
         Query query = this.manager.createQuery(jpql);
         Object obj = query.getSingleResult();
         

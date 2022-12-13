@@ -5,17 +5,31 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing;
 
+import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Grade;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Teacher;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Test;
+import static javax.swing.JOptionPane.showMessageDialog;
+
 /**
  *
  * @author f4ustx
  */
 public class AddGrade extends javax.swing.JInternalFrame {
-
+    GenericDAOImpl Generic;
+    Teacher teacher;
     /**
      * Creates new form AddGrade
      */
-    public AddGrade() {
+    public AddGrade(GenericDAOImpl generic, Teacher teacher) {
+        this.Generic = generic;
+        this.teacher = teacher;
         initComponents();
+    }
+    
+    public void setFocusOn(){
+        this.requestFocusInWindow();
     }
 
     /**
@@ -31,11 +45,11 @@ public class AddGrade extends javax.swing.JInternalFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        testf = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        studentf = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -51,9 +65,9 @@ public class AddGrade extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Points:");
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        testf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                testfActionPerformed(evt);
             }
         });
 
@@ -63,9 +77,9 @@ public class AddGrade extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Student:");
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        studentf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                studentfActionPerformed(evt);
             }
         });
 
@@ -100,11 +114,11 @@ public class AddGrade extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(testf, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(studentf, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -134,12 +148,12 @@ public class AddGrade extends javax.swing.JInternalFrame {
                             .addComponent(jLabel1))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(testf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(studentf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(12, 12, 12)
@@ -160,20 +174,39 @@ public class AddGrade extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void testfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testfActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_testfActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void studentfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentfActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_studentfActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        Grade grade = new Grade();
+        grade.setPoints(Float.parseFloat(jTextField1.getText()));
+        grade.setObservation(jTextArea1.getText());
+
+        Test test = new Test();
+        Student student = new Student();
+
+        test = (Test) Generic.listOne(test.getClass(), Integer.parseInt(testf.getText()));
+        student = (Student) Generic.listOne(student.getClass(), Integer.parseInt(studentf.getText()));
+        if(student != null && test != null){
+            grade.setApproved(grade.getPoints() >= test.getMinGrade());
+            grade.setTest(test);
+            grade.setStudent(student);
+            grade.setTeacher(this.teacher);
+            Generic.save(grade);
+            showMessageDialog(null, "Saved!");
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
@@ -187,7 +220,7 @@ public class AddGrade extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField studentf;
+    private javax.swing.JTextField testf;
     // End of variables declaration//GEN-END:variables
 }

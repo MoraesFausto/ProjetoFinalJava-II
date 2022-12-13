@@ -5,6 +5,7 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing.dashboards;
 
+import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Contract;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Teacher;
@@ -12,6 +13,8 @@ import br.edu.utfpr.moraesfausto.englishschool.view.swing.UpdatePerson;
 import javax.swing.JDesktopPane;
 import javax.swing.JPanel;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.ChangePassword;
+import br.edu.utfpr.moraesfausto.englishschool.view.swing.PaymentScreen;
+import java.beans.PropertyVetoException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
@@ -24,13 +27,15 @@ import java.util.logging.Logger;
 public class StudentDashboard extends javax.swing.JInternalFrame {
     Student Student = new Student();
     JDesktopPane mainPanel;
+    GenericDAOImpl Generic;
     Object obj;
     /**
      * Creates new form TeacherDashboard
      */
-    public StudentDashboard(JDesktopPane panel, Student student) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public StudentDashboard(JDesktopPane panel, Student student, GenericDAOImpl generic) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         mainPanel = panel;
         Student = student;
+        this.Generic = generic;
         initComponents();
         this.welcomeLabel.setText(welcomeLabel.getText() + " " + Student.getName() + "!");
         obj = new Student();
@@ -140,7 +145,7 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
         });
         jMenu3.add(jMenuItem5);
 
-        jMenuItem6.setText("Change Password...");
+        jMenuItem6.setText("Change Password");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
@@ -243,10 +248,15 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        Teacher t = new Teacher();
-        TeacherDashboard td = new TeacherDashboard(t);
-        td.setVisible(true);
-        mainPanel.add(td);
+        PaymentScreen paymentScreen = new PaymentScreen (Student, Generic);
+        paymentScreen.setVisible(true);
+        mainPanel.add(paymentScreen);
+        
+        try {
+            paymentScreen.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(StudentDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
 

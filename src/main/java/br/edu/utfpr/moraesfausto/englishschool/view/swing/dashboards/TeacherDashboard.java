@@ -5,7 +5,15 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing.dashboards;
 
+import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Teacher;
+import br.edu.utfpr.moraesfausto.englishschool.view.swing.AddGrade;
+import br.edu.utfpr.moraesfausto.englishschool.view.swing.ListGrade;
+import br.edu.utfpr.moraesfausto.englishschool.view.swing.UpdatePerson;
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JDesktopPane;
 
 /**
  *
@@ -13,12 +21,17 @@ import br.edu.utfpr.moraesfausto.englishschool.model.vo.Teacher;
  */
 public class TeacherDashboard extends javax.swing.JInternalFrame {
     Teacher Teacher;
+    JDesktopPane mainPanel;
+    GenericDAOImpl Generic;
     /**
      * Creates new form TeacherDashboard
      */
-    public TeacherDashboard(Teacher teacher) {
+    public TeacherDashboard(Teacher teacher, JDesktopPane MainPanel, GenericDAOImpl generic) {
         Teacher = teacher;
+        mainPanel = MainPanel;
+        this.Generic = generic;
         initComponents();
+        jLabel1.setText(jLabel1.getText() + " " + teacher.getName());
         //this.teamLabel.setText(teamLabel.getText() + " " + Teacher.getTeam().getId());
     }
 
@@ -39,7 +52,10 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
         teamLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -65,8 +81,33 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
 
         jMenu3.setText("Personal");
 
-        jMenuItem3.setText("Personal Info...");
-        jMenu3.add(jMenuItem3);
+        jMenu5.setText("Personal Info...");
+
+        jMenuItem5.setText("Update Personal Info");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem5);
+
+        jMenuItem3.setText("Change Password");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem3);
+
+        jMenu3.add(jMenu5);
+
+        jMenuItem6.setText("Exit...");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem6);
 
         jMenuBar1.add(jMenu3);
 
@@ -85,6 +126,11 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
         jMenu2.setText("Edit");
 
         jMenuItem1.setText("Edit Existing Grade");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem1);
 
         jMenuBar1.add(jMenu2);
@@ -138,7 +184,45 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
+        AddGrade addGrade = new AddGrade(this.Generic, this.Teacher);
+        addGrade.setVisible(true);
+        mainPanel.add(addGrade);
+        try {
+            addGrade.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TeacherDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        UpdatePerson updatePerson = new UpdatePerson(Teacher);
+        updatePerson.setVisible(true);
+        mainPanel.add(updatePerson);  
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        ListGrade listGrade = new ListGrade(this.Generic, this.Teacher);
+        listGrade.setVisible(true);
+        mainPanel.add(listGrade);
+        
+        try {
+            listGrade.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TeacherDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -148,11 +232,14 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

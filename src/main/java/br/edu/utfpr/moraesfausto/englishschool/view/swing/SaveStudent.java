@@ -39,7 +39,8 @@ public class SaveStudent extends javax.swing.JInternalFrame {
     /**
      * Creates new form SaveStudent
      */
-    public SaveStudent() {
+    public SaveStudent(GenericDAOImpl generic) {
+        genericDAO = generic;
         main();
         initComponents();
     }
@@ -58,7 +59,7 @@ public class SaveStudent extends javax.swing.JInternalFrame {
         frameConstraints.gridy = 0;
 
         // Construct panel
-        panel.setPreferredSize(new Dimension(300, 800));
+        panel.setPreferredSize(new Dimension(300, 1000));
         panel.setLayout(new GridBagLayout());
         panel.setBorder(LineBorder.createBlackLineBorder());
         JScrollPane scrollPane = new JScrollPane(panel);
@@ -125,7 +126,6 @@ public class SaveStudent extends javax.swing.JInternalFrame {
             Contract.setValue(Float.parseFloat((saveController.swingFields.listOfFields.get(6).getText())));
             Student.setContract(Contract);
             
-            genericDAO = new GenericDAOImpl();
             genericDAO.save(Student);
 
             showMessageDialog(null, "Saved!");
