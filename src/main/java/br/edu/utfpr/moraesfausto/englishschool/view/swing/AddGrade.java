@@ -5,7 +5,7 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing;
 
-import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.bo.generic.GenericBOImpl;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Grade;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Teacher;
@@ -17,12 +17,12 @@ import static javax.swing.JOptionPane.showMessageDialog;
  * @author f4ustx
  */
 public class AddGrade extends javax.swing.JInternalFrame {
-    GenericDAOImpl Generic;
+    GenericBOImpl Generic;
     Teacher teacher;
     /**
      * Creates new form AddGrade
      */
-    public AddGrade(GenericDAOImpl generic, Teacher teacher) {
+    public AddGrade(GenericBOImpl generic, Teacher teacher) {
         this.Generic = generic;
         this.teacher = teacher;
         initComponents();

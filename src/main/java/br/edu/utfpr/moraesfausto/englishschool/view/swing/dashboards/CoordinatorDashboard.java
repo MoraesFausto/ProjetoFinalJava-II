@@ -5,22 +5,22 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing.dashboards;
 
-import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.bo.generic.GenericBOImpl;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Coordinator;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Event;
-import br.edu.utfpr.moraesfausto.englishschool.model.vo.Grade;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Meeting;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.ScheduleDays;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.ScheduleMeetingTimes;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Team;
+import br.edu.utfpr.moraesfausto.englishschool.view.swing.ListStudent;
+import br.edu.utfpr.moraesfausto.englishschool.view.swing.ListTeacher;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.SaveEvent;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.SaveStudent;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.SaveTeam;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.SaveWorker;
+import java.awt.Component;
 import java.beans.PropertyVetoException;
-import java.lang.reflect.Method;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,14 +39,14 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
     private Team team = new Team();
     private SaveWorker saveWorker;
     private JDesktopPane mainPanel;
-    private GenericDAOImpl Generic;
+    private GenericBOImpl Generic;
     private Coordinator coordinator;
     private int selectedRow;
  
     /**
      * Creates new form CoordinatorDashboard
      */
-    public CoordinatorDashboard(Coordinator coordinator, JDesktopPane pane, GenericDAOImpl generic) {
+    public CoordinatorDashboard(Coordinator coordinator, JDesktopPane pane, GenericBOImpl generic) {
         this.mainPanel = pane;
         this.coordinator = coordinator;
         this.Generic = generic;
@@ -122,7 +122,6 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
-        jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -271,14 +270,6 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
 
         jMenu6.setText("New Worker...");
 
-        jMenuItem8.setText("New Coordinator...");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
-            }
-        });
-        jMenu6.add(jMenuItem8);
-
         jMenuItem9.setText("New Teacher...");
         jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -294,9 +285,19 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
         jMenu2.setText("Edit");
 
         jMenuItem4.setText("Edit Student...");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuItem14.setText("Edit Teacher...");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem14);
 
         jMenuBar1.add(jMenu2);
@@ -378,6 +379,8 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
         this.dispose();
+        for(Component c : this.mainPanel.getComponents())
+            c.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
@@ -404,13 +407,6 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
             Logger.getLogger(CoordinatorDashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
-
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
-        saveWorker = new SaveWorker("Coordinator", this.Generic);
-        saveWorker.setVisible(true);
-        mainPanel.add(saveWorker);
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         // TODO add your handling code here:
@@ -479,6 +475,30 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
         populateTable();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        // TODO add your handling code here:
+        ListTeacher listTeacher = new ListTeacher(this.Generic);
+        listTeacher.setVisible(true);
+        mainPanel.add(listTeacher);
+        try {
+            listTeacher.setSelected(isSelected);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(CoordinatorDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        ListStudent listStudent = new ListStudent(this.Generic);
+        listStudent.setVisible(true);
+        mainPanel.add(listStudent);
+        try {
+            listStudent.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(CoordinatorDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -501,7 +521,6 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

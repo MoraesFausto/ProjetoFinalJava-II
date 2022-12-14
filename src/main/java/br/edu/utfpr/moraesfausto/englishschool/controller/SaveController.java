@@ -79,10 +79,6 @@ public class SaveController<T> {
                             SwingFields embeddableFields = new SwingFields();
                             embeddableFields = generateGenericFields(fields[i].getType().getDeclaredFields());
                             listOfFields.addAll(embeddableFields.listOfFields);
-                        }else if(fields[i].getName().equals("password")){
-                            passwordField.setText(fields[i].getName());
-                            passwordField.setHorizontalAlignment(JPasswordField.CENTER);
-                            
                         }else{
                             JTextField input=new JTextField();
                             input.setText(fields[i].getName());

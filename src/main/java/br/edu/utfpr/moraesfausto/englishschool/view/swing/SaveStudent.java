@@ -6,8 +6,9 @@
 package br.edu.utfpr.moraesfausto.englishschool.view.swing;
 
 import br.edu.utfpr.moraesfausto.englishschool.controller.SaveController;
-import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.bo.generic.GenericBOImpl;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Contract;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.SchoolClass;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -35,17 +36,17 @@ public class SaveStudent extends javax.swing.JInternalFrame {
     static SaveController saveController = new SaveController();
     static String Function;
     static Student Student = new Student();
-    static GenericDAOImpl genericDAO;
+    static GenericBOImpl genericDAO;
     /**
      * Creates new form SaveStudent
      */
-    public SaveStudent(GenericDAOImpl generic) {
+    public SaveStudent(GenericBOImpl generic) {
         genericDAO = generic;
         main();
         initComponents();
     }
 
-    public static void main(){
+    public void main(){
         frame = new JFrame();
         frame.setLayout(new GridBagLayout());
         frame.setPreferredSize(new Dimension(600, 800));
@@ -76,7 +77,7 @@ public class SaveStudent extends javax.swing.JInternalFrame {
         frame.pack();
         saveController.genericFields = saveController.testGenericReader(Student);
         saveController.swingFields = saveController.generateGenericFields(saveController.genericFields.fields);
-        
+        int i = 0;
         for(JTextField textField : saveController.swingFields.listOfFields){
             JLabel label = new JLabel();
             JLabel lsLabel = new JLabel();
@@ -109,7 +110,11 @@ public class SaveStudent extends javax.swing.JInternalFrame {
 
     }
     
-    static class EnterButtonListener implements ActionListener{
+    private void closeWindow(){
+        this.dispose();
+    }
+    
+    class EnterButtonListener implements ActionListener{
         String Function;
         public EnterButtonListener(String function){
             Function = function;
@@ -118,12 +123,16 @@ public class SaveStudent extends javax.swing.JInternalFrame {
         public void actionPerformed(ActionEvent e) {
             
             Student.setName(saveController.swingFields.listOfFields.get(0).getText());
-            Student.setPassword(saveController.swingFields.listOfFields.get(1).getText());
-            Student.setPhone(saveController.swingFields.listOfFields.get(2).getText());
+            Student.setEmail(saveController.swingFields.listOfFields.get(1).getText());
+            Student.setPassword(saveController.swingFields.listOfFields.get(2).getText());
+            Student.setPhone(saveController.swingFields.listOfFields.get(3).getText());
+            Student.setSchoolarship(Float.parseFloat(saveController.swingFields.listOfFields.get(4).getText()));
+            SchoolClass classe = (SchoolClass) genericDAO.listOne(SchoolClass.class, Integer.parseInt(saveController.swingFields.listOfFields.get(5).getText()));
+            Student.setSchoolClass(classe);
             Contract Contract = new Contract();
-            Contract.setDescription(saveController.swingFields.listOfFields.get(4).getText());
-            Contract.setYearsLeft(Integer.parseInt(saveController.swingFields.listOfFields.get(5).getText()));
-            Contract.setValue(Float.parseFloat((saveController.swingFields.listOfFields.get(6).getText())));
+            Contract.setDescription(saveController.swingFields.listOfFields.get(6).getText());
+            Contract.setYearsLeft(Integer.parseInt(saveController.swingFields.listOfFields.get(7).getText()));
+            Contract.setValue(Float.parseFloat((saveController.swingFields.listOfFields.get(8).getText())));
             Student.setContract(Contract);
             
             genericDAO.save(Student);
@@ -132,6 +141,7 @@ public class SaveStudent extends javax.swing.JInternalFrame {
             panel.removeAll();
             panel.updateUI();
             frame.dispose();
+            closeWindow();
         }
         
     }

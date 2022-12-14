@@ -5,15 +5,20 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing.dashboards;
 
-import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.bo.generic.GenericBOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Schedule;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.SchoolClass;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Teacher;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.AddGrade;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.ListGrade;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.UpdatePerson;
+import java.awt.Component;
 import java.beans.PropertyVetoException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,17 +27,35 @@ import javax.swing.JDesktopPane;
 public class TeacherDashboard extends javax.swing.JInternalFrame {
     Teacher Teacher;
     JDesktopPane mainPanel;
-    GenericDAOImpl Generic;
+    GenericBOImpl Generic;
     /**
      * Creates new form TeacherDashboard
      */
-    public TeacherDashboard(Teacher teacher, JDesktopPane MainPanel, GenericDAOImpl generic) {
+    public TeacherDashboard(Teacher teacher, JDesktopPane MainPanel, GenericBOImpl generic) {
         Teacher = teacher;
         mainPanel = MainPanel;
         this.Generic = generic;
         initComponents();
+        populateTable();
         jLabel1.setText(jLabel1.getText() + " " + teacher.getName());
-        //this.teamLabel.setText(teamLabel.getText() + " " + Teacher.getTeam().getId());
+        this.teamLabel.setText(teamLabel.getText() + " " + Teacher.getTeam().getId());
+    }
+    
+    private void populateTable(){
+        List<SchoolClass> classes;
+        
+        classes = this.Generic.findAllBy(SchoolClass.class, "teacher", Math.toIntExact(this.Teacher.getId()));
+        
+        if(classes.isEmpty())
+            return;
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        
+        for(SchoolClass sc : classes){
+            Schedule schedule = sc.getSchedule();
+            model.addRow(new Object [] {
+                sc.getId(), String.valueOf(schedule.getScheduleDay()), String.valueOf(schedule.getScheduleTime())
+            });
+        }
     }
 
     /**
@@ -60,8 +83,6 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -70,10 +91,25 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
             new String [] {
                 "Id", "Day", "Time"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Long.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel1.setText("Welcome Teacher!");
+        jLabel1.setText("Welcome Teacher");
 
         jLabel2.setText("Classes");
 
@@ -135,13 +171,6 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
 
         jMenuBar1.add(jMenu2);
 
-        jMenu4.setText("Help");
-
-        jMenuItem4.setText("About NHSchool...");
-        jMenu4.add(jMenuItem4);
-
-        jMenuBar1.add(jMenu4);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -155,13 +184,11 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addComponent(teamLabel)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 295, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 248, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(80, 80, 80))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,6 +236,8 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
         this.dispose();
+        for(Component c : this.mainPanel.getComponents())
+            c.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -231,13 +260,11 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPopupMenu jPopupMenu1;

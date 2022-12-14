@@ -5,14 +5,13 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing;
 
-import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.bo.generic.GenericBOImpl;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Coordinator;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Event;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -24,13 +23,13 @@ public class SaveEvent extends javax.swing.JInternalFrame {
     int counter = 0;
     LocalDate localDate;
     Event event = new Event();
-    GenericDAOImpl Generic;
+    GenericBOImpl Generic;
     Coordinator coordinator;
     JInternalFrame mainPanel;
     /**
      * Creates new form SaveEvent
      */
-    public SaveEvent(Coordinator coordinator, GenericDAOImpl generic, JInternalFrame jDesktop) {
+    public SaveEvent(Coordinator coordinator, GenericBOImpl generic, JInternalFrame jDesktop) {
         this.coordinator = coordinator;
         this.Generic = generic;
         this.mainPanel = jDesktop;

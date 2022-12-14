@@ -32,6 +32,7 @@ public class Teacher extends Worker {
     
     public Teacher(Worker worker){
         this.name = worker.getName();
+        this.email = worker.getEmail();
         this.password = worker.getPassword();
         this.phone = worker.getPhone();
         this.licenseNumber = worker.getLicenseNumber();

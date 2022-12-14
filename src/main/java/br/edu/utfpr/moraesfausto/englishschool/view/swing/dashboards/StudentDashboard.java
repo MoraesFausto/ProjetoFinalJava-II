@@ -5,20 +5,25 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing.dashboards;
 
-import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
-import br.edu.utfpr.moraesfausto.englishschool.model.vo.Contract;
+import br.edu.utfpr.moraesfausto.englishschool.model.bo.generic.GenericBOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.bo.generic.GenericBOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Grade;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Schedule;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.SchoolClass;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
-import br.edu.utfpr.moraesfausto.englishschool.model.vo.Teacher;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Test;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.UpdatePerson;
 import javax.swing.JDesktopPane;
-import javax.swing.JPanel;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.ChangePassword;
+import br.edu.utfpr.moraesfausto.englishschool.view.swing.ListPayments;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.PaymentScreen;
+import java.awt.Component;
 import java.beans.PropertyVetoException;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -27,31 +32,55 @@ import java.util.logging.Logger;
 public class StudentDashboard extends javax.swing.JInternalFrame {
     Student Student = new Student();
     JDesktopPane mainPanel;
-    GenericDAOImpl Generic;
+    GenericBOImpl Generic;
     Object obj;
     /**
      * Creates new form TeacherDashboard
      */
-    public StudentDashboard(JDesktopPane panel, Student student, GenericDAOImpl generic) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public StudentDashboard(JDesktopPane panel, Student student, GenericBOImpl generic) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         mainPanel = panel;
         Student = student;
         this.Generic = generic;
         initComponents();
         this.welcomeLabel.setText(welcomeLabel.getText() + " " + Student.getName() + "!");
-        obj = new Student();
-        
-        /* Teste de novas implementações
-        
-        try {
-            Method get = obj.getClass().getDeclaredMethod("getContract");
+        populateTables();
 
-            Method set = obj.getClass().getDeclaredMethod("setContract", Contract.class);
-            Contract c = new Contract();
-            set.invoke(obj, c);
-            get.invoke(obj);
-        } catch (NoSuchMethodException | SecurityException ex) {
-            Logger.getLogger(StudentDashboard.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+    }
+    
+    private void populateTables(){
+        int id = Math.toIntExact(Student.getId());
+        SchoolClass schoolClass = null;
+        List<Grade> grades = Student.getGrades();
+        
+        try{
+            schoolClass = (SchoolClass) this.Generic.listOne(SchoolClass.class, Math.toIntExact(Student.getSchoolClass().getId()));
+            grades = this.Generic.findAllBy(Grade.class, "student", id);
+        } catch (Exception e) {
+            
+        }
+        
+        if(schoolClass == null)
+            return;
+        
+        DefaultTableModel modelA = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel modelB = (DefaultTableModel) jTable2.getModel();
+        
+        Schedule schedule = schoolClass.getSchedule();
+        
+        modelA.addRow(new Object[] {
+            schoolClass.getId(), String.valueOf(schedule.getScheduleDay()), String.valueOf(schedule.getScheduleTime())
+        });
+        
+        if(grades.isEmpty())
+            System.out.println("FUCK");
+        
+        for(Grade g : grades){
+            
+            Test test = g.getTest();
+            modelB.addRow(new Object[] {
+                g.getPoints(), test.getId(), String.valueOf(test.getTestType()), g.isApproved()
+            });
+        }
         
 
     }
@@ -91,9 +120,16 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
                 "Id", "Day", "Time"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Long.class, java.lang.String.class, java.lang.String.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -102,7 +138,7 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
-        welcomeLabel.setText("Welcome Young Student!");
+        welcomeLabel.setText("Welcome Young Student");
 
         jLabel2.setText("Class");
 
@@ -115,10 +151,10 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -176,6 +212,11 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
         jMenu2.add(jMenuItem1);
 
         jMenuItem3.setText("List Payments");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuBar1.add(jMenu2);
@@ -187,41 +228,44 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(355, 355, 355))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(welcomeLabel)))
+                        .addGap(153, 153, 153)
+                        .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(93, 93, 93)
-                        .addComponent(jLabel2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 201, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(100, 100, 100))))
+                        .addGap(99, 99, 99)
+                        .addComponent(welcomeLabel)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jScrollPane1, jScrollPane2});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(welcomeLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(78, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(62, 62, 62))
         );
 
         pack();
@@ -236,7 +280,8 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         this.dispose();        // TODO add your handling code here:
-       // System.exit(0);
+        for(Component c : this.mainPanel.getComponents())
+            c.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
@@ -258,6 +303,18 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
             Logger.getLogger(StudentDashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        ListPayments listPayments = new ListPayments(this.Generic, this.Student);
+        listPayments.setVisible(true);
+        mainPanel.add(listPayments);
+        try {
+            listPayments.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(StudentDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

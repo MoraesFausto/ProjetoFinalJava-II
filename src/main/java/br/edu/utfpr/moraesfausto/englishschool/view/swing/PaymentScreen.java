@@ -5,7 +5,7 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing;
 
-import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.bo.generic.GenericBOImpl;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Contract;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Payment;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.PaymentType;
@@ -20,13 +20,13 @@ import static javax.swing.JOptionPane.showMessageDialog;
  */
 public class PaymentScreen extends javax.swing.JInternalFrame {
     Student Student;
-    GenericDAOImpl Generic;
+    GenericBOImpl Generic;
     PaymentType paymentType;
     Payment payment = new Payment();
     /**
      * Creates new form PaymentScreen
      */
-    public PaymentScreen(Student student, GenericDAOImpl generic) {
+    public PaymentScreen(Student student, GenericBOImpl generic) {
         this.Student = student;
         this.Generic = generic;
         initComponents();

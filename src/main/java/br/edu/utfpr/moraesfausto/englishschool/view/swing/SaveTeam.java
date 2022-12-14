@@ -5,7 +5,7 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing;
 
-import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.bo.generic.GenericBOImpl;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Coordinator;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Meeting;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Team;
@@ -17,13 +17,13 @@ import static javax.swing.JOptionPane.showMessageDialog;
  */
 public class SaveTeam extends javax.swing.JInternalFrame {
     Team team = new Team();
-    GenericDAOImpl Generic;
+    GenericBOImpl Generic;
     Coordinator coordinator = new Coordinator();
     Meeting meeting = new Meeting();
     /**
      * Creates new form SaveTeam
      */
-    public SaveTeam(GenericDAOImpl generic) {
+    public SaveTeam(GenericBOImpl generic) {
         this.Generic = generic;
         initComponents();
     }

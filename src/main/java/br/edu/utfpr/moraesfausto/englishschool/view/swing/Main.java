@@ -5,31 +5,31 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing;
 import br.edu.utfpr.moraesfausto.englishschool.model.dao.HibernateConnection;
-import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.bo.generic.GenericBOImpl;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Book;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Contract;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Coordinator;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Person;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Level;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Meeting;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Schedule;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.ScheduleDays;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.ScheduleMeetingTimes;
-
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.ScheduleTimes;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.SchoolClass;
 import javax.swing.UIManager;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Subject;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Teacher;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Team;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Test;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.TestType;
-import br.edu.utfpr.moraesfausto.englishschool.view.swing.dashboards.StudentDashboard;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.naming.AuthenticationException;
-import static javax.swing.JOptionPane.showMessageDialog;
 
 
 /**
@@ -37,7 +37,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
  * @author f4ustx
  */
 public class Main extends javax.swing.JFrame {
-     GenericDAOImpl generic = new GenericDAOImpl();
+     GenericBOImpl generic = new GenericBOImpl();
 
     /**
      * Creates new form Main
@@ -257,6 +257,8 @@ public class Main extends javax.swing.JFrame {
         student.setContract(contract);
         student.setEmail("student@student");
         
+
+        
         Teacher teacher = new Teacher();
         teacher.setContract(contract);
         teacher.setName("Fabio");
@@ -302,15 +304,32 @@ public class Main extends javax.swing.JFrame {
         meeting.setTopic("Test");
         meeting.setGuestName(guests);
   
+        Team team = new Team();
+        team.setCoordinator(coordinator);
+        team.setMeeting(meeting);
+        teacher.setTeam(team);
         
-        this.generic.save(student);
-        this.generic.save(teacher);
+        Schedule schedule = new Schedule();
+        schedule.setScheduleDay(ScheduleDays.WEDNESDAY);
+        schedule.setScheduleTime(ScheduleTimes.SECOND_CLASS);
+        
+        SchoolClass schoolClass = new SchoolClass();
+        schoolClass.setBook(book);
+        schoolClass.setTeacher(teacher);
+        schoolClass.setSchedule(schedule);
+        student.setSchoolClass(schoolClass);
+        
         this.generic.save(coordinator);
         this.generic.save(level);
         this.generic.save(subject);
         this.generic.save(book);
         this.generic.save(test);
         this.generic.save(meeting);
+        this.generic.save(team);
+        this.generic.save(teacher);
+        this.generic.save(schoolClass);
+        this.generic.save(student);
+
 
     }
 

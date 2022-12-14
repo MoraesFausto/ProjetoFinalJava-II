@@ -54,6 +54,7 @@ public class GenericDAOImpl<T> implements GenericDAO<T>{
         return (T) obj;
     }
     
+    @Override
     public List<T> listAll(Class clazz){
         List<T> results;
         TypedQuery query = manager.createQuery("SELECT t from " + clazz.getTypeName() + " t", clazz);
@@ -61,6 +62,7 @@ public class GenericDAOImpl<T> implements GenericDAO<T>{
         return results;
     }
     
+    @Override
     public T findOne(Class clazz, String pkName, int pkValue){
         String jpql = "SELECT t FROM " + clazz.getTypeName() + " t WHERE t." + pkName + " = " + pkValue;
         Query query = this.manager.createQuery(jpql);
@@ -69,6 +71,7 @@ public class GenericDAOImpl<T> implements GenericDAO<T>{
         return (T) obj;
     }
     
+    @Override
     public List<Object> findAllBy(Class clazz, String fkName, int fkValue){
         String jpql = "SELECT t FROM " + clazz.getTypeName() + " t WHERE t." + fkName + " = " + fkValue;
         Query query = this.manager.createQuery(jpql);
@@ -77,6 +80,7 @@ public class GenericDAOImpl<T> implements GenericDAO<T>{
         return resultList;
     }
     
+    @Override
     public T findOneByEmail(Class clazz, String fieldValue){
         String jpql = "SELECT t FROM " + clazz.getTypeName() + " t WHERE t.email = '" + fieldValue + "'";
         
@@ -84,6 +88,10 @@ public class GenericDAOImpl<T> implements GenericDAO<T>{
         Object obj = query.getSingleResult();
         
         return (T) obj;
+    }
+    
+    public void closeDAO(){
+        this.manager.close();
     }
 
 }

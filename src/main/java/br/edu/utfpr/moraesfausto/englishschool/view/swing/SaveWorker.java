@@ -9,6 +9,7 @@ import br.edu.utfpr.moraesfausto.englishschool.controller.SaveController;
 
 import br.edu.utfpr.moraesfausto.englishschool.model.bo.TeamBO;
 
+import br.edu.utfpr.moraesfausto.englishschool.model.bo.generic.GenericBOImpl;
 import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Contract;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Coordinator;
@@ -44,20 +45,20 @@ public class SaveWorker extends javax.swing.JInternalFrame {
     static Coordinator coordinator;
     static Team team = new Team();
     static TeamBO teamBO;
-    static GenericDAOImpl genericDAO;
+    GenericBOImpl genericDAO;
     
 
     /**
      * Creates new form SaveScreen
      */
-    public SaveWorker(String function, GenericDAOImpl generic) {
+    public SaveWorker(String function, GenericBOImpl generic) {
         Function = function;
         genericDAO = generic;
         main(function);
         initComponents();
     }
     
-    public static void main(String args){
+    public void main(String args){
         frame = new JFrame();
         frame.setLayout(new GridBagLayout());
         frame.setPreferredSize(new Dimension(600, 800));
@@ -114,6 +115,7 @@ public class SaveWorker extends javax.swing.JInternalFrame {
             teamLabel.setText("Team");
             JTextField teamId = new JTextField();
             teamId.setText("");
+            teamId.setHorizontalAlignment(JTextField.CENTER);
             panel.add(teamLabel, saveController.swingFields.textFieldConstraints);
             panel.add(teamId, saveController.swingFields.textFieldConstraints);
             saveController.swingFields.listOfFields.add(teamId);
@@ -130,7 +132,11 @@ public class SaveWorker extends javax.swing.JInternalFrame {
 
     }
     
-    static class EnterButtonListener implements ActionListener{
+    private void closeWindow(){
+        this.dispose();
+    }
+    
+    class EnterButtonListener implements ActionListener{
         String Function;
         public EnterButtonListener(String function){
             Function = function;
@@ -140,30 +146,22 @@ public class SaveWorker extends javax.swing.JInternalFrame {
             
             worker.setActive(saveController.swingFields.listOfCheckBoxes.get(0).isSelected());
             worker.setName(saveController.swingFields.listOfFields.get(0).getText());
-            worker.setPassword(saveController.swingFields.listOfFields.get(1).getText());
-            worker.setPhone(saveController.swingFields.listOfFields.get(2).getText());
-            worker.setLicenseNumber(saveController.swingFields.listOfFields.get(3).getText());
+            worker.setEmail(saveController.swingFields.listOfFields.get(1).getText());
+            worker.setPassword(saveController.swingFields.listOfFields.get(2).getText());
+            worker.setPhone(saveController.swingFields.listOfFields.get(3).getText());
+            worker.setLicenseNumber(saveController.swingFields.listOfFields.get(4).getText());
             Contract contract = new Contract();
-            contract.setDescription(saveController.swingFields.listOfFields.get(4).getText());
-            contract.setYearsLeft(Integer.parseInt(saveController.swingFields.listOfFields.get(5).getText()));
-            contract.setValue(Float.parseFloat((saveController.swingFields.listOfFields.get(6).getText())));
+            contract.setDescription(saveController.swingFields.listOfFields.get(5).getText());
+            contract.setYearsLeft(Integer.parseInt(saveController.swingFields.listOfFields.get(6).getText()));
+            contract.setValue(Float.parseFloat((saveController.swingFields.listOfFields.get(7).getText())));
             worker.setContract(contract);
             
             
             
             if(Function.equals("Teacher")){
-                teamBO = new TeamBO();
-                teamBO.save(team);
                 teacher = new Teacher(worker);
-                teacher.setTeam(teamBO.listById(Long.parseLong(saveController.swingFields.listOfFields.get(7).getText())));
-                
+                teacher.setTeam((Team) genericDAO.listOne(Team.class, Integer.parseInt(saveController.swingFields.listOfFields.get(8).getText())));
                 genericDAO.save(teacher);
-            }else if(Function.equals("Coordinator")){
-                 coordinator = new Coordinator(worker);
-                 genericDAO.save(coordinator);
-
-                 team.setCoordinator(coordinator);
-                 genericDAO.save(team);
             }
             
                 
@@ -175,6 +173,7 @@ public class SaveWorker extends javax.swing.JInternalFrame {
             panel.removeAll();
             panel.updateUI();
             frame.dispose();
+            closeWindow();
         }
         
     }  

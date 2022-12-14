@@ -5,7 +5,7 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing;
 
-import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.bo.generic.GenericBOImpl;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Grade;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Teacher;
@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author f4ustx
  */
 public class ListGrade extends javax.swing.JInternalFrame {
-    private GenericDAOImpl Generic;
+    private GenericBOImpl Generic;
     private Teacher teacher;
     private Grade grade = new Grade();
     private int selectedRow;
@@ -27,7 +27,7 @@ public class ListGrade extends javax.swing.JInternalFrame {
     /**
      * Creates new form AddGrade
      */
-    public ListGrade(GenericDAOImpl generic, Teacher teacher) {
+    public ListGrade(GenericBOImpl generic, Teacher teacher) {
         this.Generic = generic;
         this.teacher = teacher;
         initComponents();
@@ -44,7 +44,7 @@ public class ListGrade extends javax.swing.JInternalFrame {
         List<Grade> grades;
         grades = Generic.listAll(Grade.class);
         
-        if(grades.isEmpty())
+        if(grades.isEmpty() && jTable1.getRowCount() == 0)
             return;
         
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.utfpr.moraesfausto.englishschool.model.dao.generic;
+package br.edu.utfpr.moraesfausto.englishschool.model.bo.generic;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author f4ustx
  */
-public interface GenericDAO<T> {
+public interface GenericBO<T> {
     void save(T object);
     void update(T object);
     void delete(T object);

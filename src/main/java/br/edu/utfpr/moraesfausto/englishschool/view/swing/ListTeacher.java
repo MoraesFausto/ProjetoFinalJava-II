@@ -5,17 +5,62 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing;
 
+import br.edu.utfpr.moraesfausto.englishschool.model.bo.generic.GenericBOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Contract;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Teacher;
+import br.edu.utfpr.moraesfausto.englishschool.model.vo.Team;
+import java.util.List;
+import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author f4ustx
  */
 public class ListTeacher extends javax.swing.JInternalFrame {
-
+    GenericBOImpl Generic;
+    Teacher teacher = new Teacher();
+    Contract contract = new Contract();
+    int selectedRow;
     /**
      * Creates new form ListWorker
      */
-    public ListTeacher() {
+    public ListTeacher(GenericBOImpl generic) {
+        this.Generic = generic;
         initComponents();
+        populateTable();
+    }
+    
+    private Teacher getSelectedRow(){
+        this.selectedRow = jTable1.getSelectedRow();
+        if(this.selectedRow == -1) this.selectedRow = jTable2.getSelectedRow();
+        int id = (int) jTable1.getValueAt(this.selectedRow, 0);
+        Teacher teacher = (Teacher) Generic.listOne(Teacher.class, id);
+        return teacher;
+    }
+    
+    private void populateTable(){
+        List<Teacher> teachers;
+       teachers = Generic.listAll(Teacher.class);
+       DefaultTableModel modelA = (DefaultTableModel) jTable1.getModel();
+       DefaultTableModel modelB = (DefaultTableModel) jTable2.getModel();
+       modelA.setRowCount(0);
+       modelB.setRowCount(0);
+       
+       if(teachers.isEmpty()) return;
+       
+       for(Teacher t : teachers){
+           modelA.addRow( new Object []{
+               Math.toIntExact(t.getId()), Math.toIntExact(t.getTeam().getId()), t.getLicenseNumber(), t.isActive()
+           });
+           contract = t.getContract();
+           modelB.addRow( new Object[]{
+               Math.toIntExact(t.getId()), contract.getDescription(), contract.getYearsLeft(), contract.getValue()
+           });
+       }
+           
     }
 
     /**
@@ -70,7 +115,7 @@ public class ListTeacher extends javax.swing.JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -90,30 +135,43 @@ public class ListTeacher extends javax.swing.JInternalFrame {
         jLabel2.setText("Contract Info");
 
         jButton1.setText("Cancel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Update");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Delete");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(165, 165, 165)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel1)
                     .addComponent(jLabel2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -144,6 +202,42 @@ public class ListTeacher extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.teacher = getSelectedRow();
+        if(this.selectedRow == -1){
+            showMessageDialog(null, "Nothing Selected!");
+            return;
+        }
+        Team team = (Team) Generic.listOne(Team.class, (int) jTable1.getValueAt(this.selectedRow, 1));
+        this.teacher.setTeam(team);
+        this.teacher.setLicenseNumber((String) jTable1.getValueAt(this.selectedRow, 2));
+        this.teacher.setActive((boolean) jTable1.getValueAt(this.selectedRow, 3));
+        contract = this.teacher.getContract();
+        contract.setDescription((String) jTable2.getValueAt(this.selectedRow, 1));
+        contract.setYearsLeft((int) jTable2.getValueAt(this.selectedRow, 2));
+        contract.setValue((float) jTable2.getValueAt(this.selectedRow, 3));
+        this.teacher.setContract(contract);
+        
+        Generic.update(this.teacher);
+        populateTable();
+        showMessageDialog(null, "Updated");
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        this.teacher = (Teacher) getSelectedRow();
+        Generic.delete(this.teacher);
+        showMessageDialog(null, "Deleted!");
+        populateTable();
+
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
