@@ -4,7 +4,7 @@
 
 ### 2ª Avaliação
 
-#### 20/11/2022
+#### 15/12/2022
 
 - [x]  Geração do banco de dados
 
