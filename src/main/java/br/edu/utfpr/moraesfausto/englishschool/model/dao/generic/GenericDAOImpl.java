@@ -6,7 +6,6 @@
 package br.edu.utfpr.moraesfausto.englishschool.model.dao.generic;
 
 import br.edu.utfpr.moraesfausto.englishschool.model.dao.HibernateConnection;
-import br.edu.utfpr.moraesfausto.englishschool.model.vo.Grade;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;

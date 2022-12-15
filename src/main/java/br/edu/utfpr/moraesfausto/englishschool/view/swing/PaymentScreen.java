@@ -257,15 +257,25 @@ public class PaymentScreen extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Contract contract = Student.getContract();
         String paymentValue = value.getText();
-        contract.setValue(contract.getValue() - Float.parseFloat(paymentValue));
+        float paidValue = Float.parseFloat(paymentValue);
+        
+        if(paidValue > contract.getValue()){
+            paidValue = contract.getValue();
+            contract.setValue(0);
+        }
+        else
+            contract.setValue(contract.getValue() - Float.parseFloat(paymentValue));
+        
         Student.setContract(contract);
         Generic.update(Student);
-        payment.setValue(Float.parseFloat(paymentValue));
+        payment.setValue(paidValue);
         payment.setStudent(Student);
         LocalDate localDate = LocalDate.now();
         payment.setPaymentDate(Date.valueOf(localDate));
         Generic.save(payment);
+        pending.setText("Pending on Contract: " + contract.getValue());
         showMessageDialog(null, "Payment Confirmed");
+        jPanel1.updateUI();      
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

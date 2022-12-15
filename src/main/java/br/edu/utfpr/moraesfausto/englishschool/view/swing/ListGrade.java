@@ -6,6 +6,7 @@
 package br.edu.utfpr.moraesfausto.englishschool.view.swing;
 
 import br.edu.utfpr.moraesfausto.englishschool.model.bo.generic.GenericBOImpl;
+import br.edu.utfpr.moraesfausto.englishschool.model.dao.generic.GenericDAOImpl;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Grade;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Teacher;
@@ -28,7 +29,7 @@ public class ListGrade extends javax.swing.JInternalFrame {
      * Creates new form AddGrade
      */
     public ListGrade(GenericBOImpl generic, Teacher teacher) {
-        this.Generic = generic;
+        this.Generic =generic;
         this.teacher = teacher;
         initComponents();
         populateTable();
@@ -219,8 +220,8 @@ public class ListGrade extends javax.swing.JInternalFrame {
         Test test = new Test();
         Student student = new Student();
         
+        student = (Student) Generic.listOne(student.getClass(), (int) jTable1.getValueAt(this.selectedRow, 3));
         test = (Test) Generic.listOne(test.getClass(), (int) jTable1.getValueAt(this.selectedRow, 4));
-        student = (Student) Generic.listOne(student.getClass(), (int) jTable1.getValueAt(this.selectedRow, 4));
         
         if(student != null && test != null){
             grade.setTest(test);

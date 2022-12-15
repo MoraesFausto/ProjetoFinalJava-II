@@ -6,13 +6,11 @@
 package br.edu.utfpr.moraesfausto.englishschool.view.swing.dashboards;
 
 import br.edu.utfpr.moraesfausto.englishschool.model.bo.generic.GenericBOImpl;
-import br.edu.utfpr.moraesfausto.englishschool.model.bo.generic.GenericBOImpl;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Grade;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Schedule;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.SchoolClass;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Test;
-import br.edu.utfpr.moraesfausto.englishschool.view.swing.UpdatePerson;
 import javax.swing.JDesktopPane;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.ChangePassword;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.ListPayments;
@@ -43,6 +41,8 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
         this.Generic = generic;
         initComponents();
         this.welcomeLabel.setText(welcomeLabel.getText() + " " + Student.getName() + "!");
+        this.emailLabel.setText(this.emailLabel.getText() + " " + Student.getEmail());
+        this.phoneLabel.setText(this.phoneLabel.getText() + " " + Student.getPhone());
         populateTables();
 
     }
@@ -72,10 +72,9 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
         });
         
         if(grades.isEmpty())
-            System.out.println("FUCK");
+            return;
         
         for(Grade g : grades){
-            
             Test test = g.getTest();
             modelB.addRow(new Object[] {
                 g.getPoints(), test.getId(), String.valueOf(test.getTestType()), g.isApproved()
@@ -102,10 +101,11 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
+        phoneLabel = new javax.swing.JLabel();
+        emailLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -169,17 +169,13 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Grades");
 
+        phoneLabel.setText("Phone:");
+
+        emailLabel.setText("Email:");
+
         jMenu1.setText("Personal ");
 
         jMenu3.setText("Personal Info...");
-
-        jMenuItem5.setText("Update Personal Info");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem5);
 
         jMenuItem6.setText("Change Password");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
@@ -230,7 +226,7 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(355, 355, 355))
+                .addGap(356, 356, 356))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -242,7 +238,9 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(phoneLabel)
+                    .addComponent(emailLabel))
                 .addContainerGap())
         );
 
@@ -259,37 +257,28 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
                             .addComponent(welcomeLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(emailLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(phoneLabel)))
+                .addGap(65, 65, 65))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
-        UpdatePerson updatePerson = new UpdatePerson(Student);
-        updatePerson.setVisible(true);
-        mainPanel.add(updatePerson);        
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         this.dispose();        // TODO add your handling code here:
         for(Component c : this.mainPanel.getComponents())
             c.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
-        ChangePassword changePassword = new ChangePassword(Student);
-        changePassword.setVisible(true);
-        mainPanel.add(changePassword);
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
@@ -316,8 +305,16 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        ChangePassword changePassword = new ChangePassword(Student, this.Generic);
+        changePassword.setVisible(true);
+        mainPanel.add(changePassword);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel emailLabel;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
@@ -327,13 +324,13 @@ public class StudentDashboard extends javax.swing.JInternalFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JLabel phoneLabel;
     private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables
 }

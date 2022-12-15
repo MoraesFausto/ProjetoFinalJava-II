@@ -5,6 +5,7 @@
  */
 package br.edu.utfpr.moraesfausto.englishschool.view.swing;
 
+import br.edu.utfpr.moraesfausto.englishschool.model.bo.generic.GenericBOImpl;
 import static br.edu.utfpr.moraesfausto.englishschool.view.swing.UpdatePerson.Obj;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Person;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Student;
@@ -16,12 +17,16 @@ import static javax.swing.JOptionPane.showMessageDialog;
  */
 public class ChangePassword extends javax.swing.JFrame {
     static Student student;
+    Person person;
+    GenericBOImpl Generic;
 
     /**
      * Creates new form ChangePassword
      */
-    public ChangePassword(Student obj) {
-        student = obj;
+    public ChangePassword(Person obj, GenericBOImpl generic) {
+        person = obj;
+        System.out.println(person.getPassword());
+        this.Generic = generic;
         initComponents();
     }
     
@@ -111,11 +116,11 @@ public class ChangePassword extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String senhaAtual = jPasswordField1.getText();
-        System.out.println(student.getPassword());
-        System.out.println(senhaAtual);
-        if(jPasswordField1.getText() == null ? student.getPassword() == null : jPasswordField1.getText().equals(student.getPassword())){
+        if(jPasswordField1.getText() == null ? person.getPassword() == null : jPasswordField1.getText().equals(person.getPassword())){
             if(jPasswordField2.getText().equals(jPasswordField3.getText()) && !"".equals(jPasswordField2.getText())){
-                student.setPassword(jPasswordField2.getText());
+                person.setPassword(jPasswordField2.getText());
+                Generic.update(person);
+                showMessageDialog(null, "Senha Alterada!");
                 this.dispose();
             }else{
                 if("".equals(jPasswordField2.getText())){
@@ -127,7 +132,6 @@ public class ChangePassword extends javax.swing.JFrame {
         }else{
             showMessageDialog(null, "Não é sua senha atual!");
             }
-        System.out.println("Sua senha é: " + student.getPassword());
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -58,6 +58,11 @@ public class SaveWorker extends javax.swing.JInternalFrame {
         initComponents();
     }
     
+    private void closeWindow(){
+        this.frame.dispose();
+        this.dispose();
+    }
+    
     public void main(String args){
         frame = new JFrame();
         frame.setLayout(new GridBagLayout());
@@ -72,7 +77,7 @@ public class SaveWorker extends javax.swing.JInternalFrame {
         frameConstraints.gridy = 0;
 
         // Construct panel
-        panel.setPreferredSize(new Dimension(300, 1000));
+        panel.setPreferredSize(new Dimension(300, 1200));
         panel.setLayout(new GridBagLayout());
         panel.setBorder(LineBorder.createBlackLineBorder());
         JScrollPane scrollPane = new JScrollPane(panel);
@@ -90,7 +95,21 @@ public class SaveWorker extends javax.swing.JInternalFrame {
         
         saveController.genericFields = saveController.testGenericReader(worker);
         saveController.swingFields = saveController.generateGenericFields(saveController.genericFields.fields);
-        
+        JButton btn = new JButton();
+        btn.setText("Back");
+
+        btn.addActionListener(new ActionListener(){
+            public void ActionListener(ActionEvent e){
+                
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                closeWindow();
+            }
+        });
+        btn.setHorizontalAlignment(JButton.CENTER);
+        panel.add(btn, saveController.swingFields.textFieldConstraints);
         for(JTextField textField : saveController.swingFields.listOfFields){
             JLabel label = new JLabel();
             JLabel lsLabel = new JLabel();
@@ -132,9 +151,7 @@ public class SaveWorker extends javax.swing.JInternalFrame {
 
     }
     
-    private void closeWindow(){
-        this.dispose();
-    }
+
     
     class EnterButtonListener implements ActionListener{
         String Function;

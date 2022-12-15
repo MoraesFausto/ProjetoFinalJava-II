@@ -89,23 +89,34 @@ public class UpdatePerson extends javax.swing.JInternalFrame {
         UpdateController updateController = new UpdateController();
         
         String [] values = updateController.personalInfo(Obj, saveController);
-            // {Student.getName(), Student.getPassword(), Student.getPhone()};
+            // {Student.getName(), Student.getEmail(), Student.getPassword(), Student.getPhone()};
         
+        for(String s : values)
+            System.out.println(s);
         
         panel.add(mainLabel,saveController.swingFields.textFieldConstraints);
-        int i = 2;
+        int i = 3;
+        int j = 0;
         for(JTextField textField : saveController.swingFields.listOfFields){
-            System.out.println(values[i]);
             JLabel label = new JLabel();
             JLabel lsLabel = new JLabel();
             lsLabel.setText("");
-            label.setText(textField.getText());
-            label.setHorizontalAlignment(JLabel.CENTER);               
-            textField.setText(values[i]);
-            panel.add(lsLabel, saveController.swingFields.textFieldConstraints);
-            panel.add(label, saveController.swingFields.textFieldConstraints);
-            panel.add(textField, saveController.swingFields.textFieldConstraints);
-            i-=2;
+            if(!textField.getText().equals("password")){
+                label.setText(textField.getText());
+                label.setHorizontalAlignment(JLabel.CENTER);
+                if(textField.getText().equals("email")) j = 1;
+                else j = 0;
+                if(textField.getText().equals("phone")) j = -1;
+                textField.setText(values[i+j]);
+                panel.add(lsLabel, saveController.swingFields.textFieldConstraints);
+                panel.add(label, saveController.swingFields.textFieldConstraints);
+                panel.add(textField, saveController.swingFields.textFieldConstraints);
+                if(i == 0) break;
+                if(i == 3)
+                    i-=2;
+                else
+                    i--;
+            }
 
         }
         

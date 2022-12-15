@@ -38,11 +38,13 @@ public class viewFactory {
     Object [] listObj = {student, teacher, coordinator};
     JDesktopPane jDesktopPane1;
 
+    
     private void clearDesktopPane(){
         Component [] components = jDesktopPane1.getComponents();
         for(Component c : components)
             c.setVisible(!c.isVisible());
     }
+    
     
     public void findPersonByEmail(String email) throws AuthenticationException{
         try{
@@ -54,14 +56,14 @@ public class viewFactory {
         }
     }
     
-    public void findObjectClass(String password) throws AuthenticationException{
+    public void verifyPassword(String password) throws AuthenticationException{
        for(Object o : listObj){
             try{
                 this.obj = genericDAO.listOne(o.getClass(), Math.toIntExact(this.person.getId()));
                 if(this.obj != null){
                     Method getPassword = this.obj.getClass().getMethod("getPassword");
                     if(!password.equals((String) getPassword.invoke(this.obj))){
-                        throw new AuthenticationException("Wrong Password or ID");
+                        throw new AuthenticationException("Wrong Password or Email");
                         
                     }else{
                         break;
@@ -93,7 +95,7 @@ public class viewFactory {
                 teacherDashboard.setVisible(true);
             }else if(obj.getClass().equals(Coordinator.class)){
                 CoordinatorDashboard coordinatorDashboard = new CoordinatorDashboard((Coordinator) obj, jDesktopPane1, generic);
-                 clearDesktopPane();
+                clearDesktopPane();
                 jDesktopPane1.updateUI();
                 jDesktopPane1.add(coordinatorDashboard);
                 coordinatorDashboard.setVisible(true);
@@ -109,7 +111,7 @@ public class viewFactory {
         this.jDesktopPane1 = jDesktopPane1;
         
         findPersonByEmail(email);
-        findObjectClass(password);
+        verifyPassword(password);
         generateDashboard();
     }
 }

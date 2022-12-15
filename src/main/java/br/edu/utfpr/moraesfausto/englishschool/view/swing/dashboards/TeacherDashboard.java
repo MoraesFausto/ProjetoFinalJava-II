@@ -10,8 +10,8 @@ import br.edu.utfpr.moraesfausto.englishschool.model.vo.Schedule;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.SchoolClass;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Teacher;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.AddGrade;
+import br.edu.utfpr.moraesfausto.englishschool.view.swing.ChangePassword;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.ListGrade;
-import br.edu.utfpr.moraesfausto.englishschool.view.swing.UpdatePerson;
 import java.awt.Component;
 import java.beans.PropertyVetoException;
 import java.util.List;
@@ -76,7 +76,6 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
@@ -118,14 +117,6 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
         jMenu3.setText("Personal");
 
         jMenu5.setText("Personal Info...");
-
-        jMenuItem5.setText("Update Personal Info");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
-        jMenu5.add(jMenuItem5);
 
         jMenuItem3.setText("Change Password");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -222,15 +213,11 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
-        UpdatePerson updatePerson = new UpdatePerson(Teacher);
-        updatePerson.setVisible(true);
-        mainPanel.add(updatePerson);  
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
-
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
+        ChangePassword changePassword = new ChangePassword(this.Teacher, this.Generic);
+        changePassword.setVisible(true);
+        mainPanel.add(changePassword);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
@@ -265,7 +252,6 @@ public class TeacherDashboard extends javax.swing.JInternalFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;

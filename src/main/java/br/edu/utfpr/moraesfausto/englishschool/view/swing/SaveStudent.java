@@ -46,6 +46,12 @@ public class SaveStudent extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+        
+    private void closeWindow(){
+        this.dispose();
+        this.frame.dispose();
+    }
+    
     public void main(){
         frame = new JFrame();
         frame.setLayout(new GridBagLayout());
@@ -60,7 +66,7 @@ public class SaveStudent extends javax.swing.JInternalFrame {
         frameConstraints.gridy = 0;
 
         // Construct panel
-        panel.setPreferredSize(new Dimension(300, 1000));
+        panel.setPreferredSize(new Dimension(300, 1200));
         panel.setLayout(new GridBagLayout());
         panel.setBorder(LineBorder.createBlackLineBorder());
         JScrollPane scrollPane = new JScrollPane(panel);
@@ -77,7 +83,24 @@ public class SaveStudent extends javax.swing.JInternalFrame {
         frame.pack();
         saveController.genericFields = saveController.testGenericReader(Student);
         saveController.swingFields = saveController.generateGenericFields(saveController.genericFields.fields);
-        int i = 0;
+        
+        JButton btn = new JButton();
+        btn.setText("Back");
+
+        btn.addActionListener(new ActionListener() {
+            public void ActionListener(ActionEvent e) {
+
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                closeWindow();
+            }
+        });
+        
+        btn.setHorizontalAlignment(JButton.CENTER);
+        panel.add(btn, saveController.swingFields.textFieldConstraints);
+        
         for(JTextField textField : saveController.swingFields.listOfFields){
             JLabel label = new JLabel();
             JLabel lsLabel = new JLabel();
@@ -109,10 +132,7 @@ public class SaveStudent extends javax.swing.JInternalFrame {
         frame.setVisible(true);
 
     }
-    
-    private void closeWindow(){
-        this.dispose();
-    }
+
     
     class EnterButtonListener implements ActionListener{
         String Function;
@@ -174,6 +194,8 @@ public class SaveStudent extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

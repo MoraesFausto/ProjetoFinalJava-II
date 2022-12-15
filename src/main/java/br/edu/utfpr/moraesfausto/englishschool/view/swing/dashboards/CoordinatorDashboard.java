@@ -12,6 +12,7 @@ import br.edu.utfpr.moraesfausto.englishschool.model.vo.Meeting;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.ScheduleDays;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.ScheduleMeetingTimes;
 import br.edu.utfpr.moraesfausto.englishschool.model.vo.Team;
+import br.edu.utfpr.moraesfausto.englishschool.view.swing.ChangePassword;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.ListStudent;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.ListTeacher;
 import br.edu.utfpr.moraesfausto.englishschool.view.swing.SaveEvent;
@@ -38,9 +39,9 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
     private Event event = new Event();
     private Team team = new Team();
     private SaveWorker saveWorker;
-    private JDesktopPane mainPanel;
-    private GenericBOImpl Generic;
-    private Coordinator coordinator;
+    private final JDesktopPane mainPanel;
+    private final GenericBOImpl Generic;
+    private final Coordinator coordinator;
     private int selectedRow;
  
     /**
@@ -115,7 +116,8 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
         jButton4 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -229,8 +231,17 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
 
         jMenu5.setText("Profile");
 
-        jMenuItem1.setText("Personal Info...");
-        jMenu5.add(jMenuItem1);
+        jMenu3.setText("Personal Info...");
+
+        jMenuItem3.setText("Change Password");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem3);
+
+        jMenu5.add(jMenu3);
 
         jMenuItem2.setText("Exit...");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -433,7 +444,6 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
         this.team = (Team) getSelectedRow(jTable2, Team.class);
         Meeting meeting = (Meeting) Generic.listOne(Meeting.class, (int) jTable2.getValueAt(this.selectedRow, 1));
         
@@ -499,6 +509,13 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        ChangePassword changePassword = new ChangePassword(this.coordinator, this.Generic);
+        changePassword.setVisible(true);
+        mainPanel.add(changePassword);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -509,14 +526,15 @@ public class CoordinatorDashboard extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
