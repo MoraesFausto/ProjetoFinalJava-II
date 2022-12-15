@@ -2,7 +2,7 @@
 
 ## Sistema de Administração de uma Escola de Inglês
 
-### 2ª Avaliação
+### Avaliação Final
 
 #### 15/12/2022
 
